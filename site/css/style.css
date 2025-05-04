@@ -1,0 +1,254 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Общие стили для шапки */
+header {
+    background-color: #3D405B;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    font-family: 'Arial', sans-serif;
+   
+}
+
+/* Контейнер для содержимого шапки */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Стили для логотипа/названия */
+.header-logo {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    text-decoration: none;
+}
+
+
+/* Навигационное меню */
+.nav-menu {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-menu a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-menu a:hover {
+    color: #F2CC8F;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #F2CC8F;
+    transition: width 0.3s ease;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
+
+/* Основные стили */
+.company-benefits {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 80px 20px;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-image: url('../images/1.jpg');
+    background-size: cover; 
+}
+
+/* Заголовок */
+.company-benefits h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2a4365;
+    margin-bottom: 30px;
+    position: relative;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.company-benefits h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background-color: #4299e1;
+}
+
+/* Основной текст */
+.company-benefits p {
+    font-size: 1.1rem;
+    color: #4a5568;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+/* Блоки преимуществ */
+.benefits-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.benefit-item {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.benefit-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.benefit-item h2 {
+    font-size: 1.5rem;
+    color: #2b6cb0;
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 40px;
+}
+
+.benefit-item h2::before {
+    content: attr(data-number);
+    position: absolute;
+    left: 0;
+    top: -5px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #ebf8ff;
+    z-index: -1;
+}
+
+.benefit-item p {
+    text-align: left;
+    margin-bottom: 0;
+    color: #718096;
+}
+
+/* Кнопка Read More */
+.read-more-btn {
+    display: inline-block;
+    background-color: #4299e1;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+.read-more-btn:hover {
+    background-color: #2b6cb0;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(43, 108, 176, 0.3);
+}
+
+.read-more-container {
+    text-align: center;
+    margin-top: 40px;
+}
+
+/* Разделительная линия */
+.company-benefits hr {
+    border: 0;
+    height: 1px;
+    background-color: #e2e8f0;
+    margin: 50px auto;
+    max-width: 200px;
+}
+
+.white-column {
+    width: 50%;
+    background-color: white;
+    padding: 60px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content-side {
+    width: 50%;
+    padding: 60px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 30px;
+}
+
+.benefit {
+    margin-bottom: 40px;
+}
+
+.benefit h2 {
+    font-size: 1.5rem;
+    color: #222;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
