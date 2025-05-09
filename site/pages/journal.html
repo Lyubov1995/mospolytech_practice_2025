@@ -1,258 +1,733 @@
-<!DOCTYPE html>  
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-	<title>Главная</title>
-    <link rel="icon" href="../images/icon.png"  type="image/png">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/noto-serif-condensed" type="text/css"/>
-    <script src="../js/script.js"></script>
-</head>
-<body>
-     <header>
-        <div class="header-container">
-            <a href="/" class="header-logo"><span></span></a>
-            
-            <nav class="nav-menu">
-                <a href="">Главная</a>
-                <a href="about.html">О проекте</a>
-                <a href="/membership">Участники</a>
-                <a href="/events">Журнал</a>
-                <a href="Resources.html">Ресурсы</a>
-            </nav>
-        </div>
-    </header>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MetaAvatar - О проекте</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-
-:root {
-            --primary: #4361ee;
-            --secondary: #3f37c9;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --success: #4cc9f0;
+        :root {
+            --primary: #5e35b1;
+            --secondary: #3949ab;
+            --accent: #7c4dff;
+            --dark: #1a237e;
+            --light: #e8eaf6;
+            --text: #212121;
+            --text-light: #757575;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--text);
+            line-height: 1.6;
         }
         
         .container {
-            max-width: 900px;
-            margin: 40px auto;
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 0 20px;
         }
         
         header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(30, 27, 75, 0.8), rgba(30, 27, 75, 0.8)), url('https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 10px 5px;
+            box-shadow: 0 4px 15px rgba(124, 77, 255, 0.4);
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(124, 77, 255, 0.6);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
             text-align: center;
             margin-bottom: 50px;
         }
         
-        h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
+        .section-title h2 {
+            font-size: 2.2rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
         }
         
-        .subtitle {
-            color: var(--gray);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 80px;
+            height: 4px;
+            background: var(--accent);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .card p, .card ul {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .card ul {
+            padding-left: 20px;
+        }
+        
+        .card li {
+            margin-bottom: 8px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-item {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .feature-item h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
         }
         
         .timeline {
             position: relative;
-            padding-left: 30px;
+            max-width: 1000px;
+            margin: 40px auto 0;
         }
         
-        .timeline::before {
+        .timeline::after {
             content: '';
             position: absolute;
-            left: 7px;
+            width: 4px;
+            background: var(--light);
             top: 0;
             bottom: 0;
-            width: 2px;
-            background: var(--primary);
-            opacity: 0.2;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
         }
         
-        .post {
+        .timeline-item {
+            padding: 10px 40px;
             position: relative;
-            margin-bottom: 40px;
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 50%;
+            box-sizing: border-box;
         }
         
-        .post:hover {
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+        
+        .left {
+            left: 0;
+        }
+        
+        .right {
+            left: 50%;
+        }
+        
+        .left::after {
+            right: -10px;
+        }
+        
+        .right::after {
+            left: -10px;
+        }
+        
+        .timeline-content {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .timeline-content h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-date {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+            bottom: 0;
+            left: 0;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column ul li a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .left::after, .right::after {
+                left: 18px;
+            }
+            
+            .right {
+                left: 0;
+            }
+        }
+        .problems-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .problem-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--accent);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .problem-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
         
-        .post::before {
+        .problem-card::before {
             content: '';
             position: absolute;
-            left: -30px;
-            top: 30px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: var(--primary);
-            border: 4px solid white;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
         }
         
-        .post-date {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 500;
+        .problem-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .problem-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Новые стили для целей */
+        .goals-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .goal-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            border: 1px solid rgba(124, 77, 255, 0.2);
+        }
+        
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(124, 77, 255, 0.15);
+            border-color: var(--accent);
+        }
+        
+        .goal-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 3rem;
+            font-weight: 700;
+            color: rgba(124, 77, 255, 0.1);
+            line-height: 1;
+        }
+        
+        .goal-icon {
+            font-size: 2rem;
+            color: var(--accent);
             margin-bottom: 15px;
         }
         
-        .post-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin: 0 0 15px 0;
-            color: var(--dark);
+        .goal-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            position: relative;
+            padding-bottom: 10px;
         }
         
-        .post-content {
-            color: var(--gray);
-            margin-bottom: 20px;
-        }
-        
-        .post-footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-        
-        .post-author {
-            display: flex;
-            align-items: center;
-        }
-        
-        .author-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: var(--success);
-            margin-right: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 0.8rem;
-        }
-        
-        .author-name {
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        .post-tags {
-            display: flex;
-            gap: 8px;
-        }
-        
-        .tag {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: #e9ecef;
-            color: var(--gray);
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px auto;
-            }
-            
-            .post-footer {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-            
-            .post-tags {
-                flex-wrap: wrap;
-            }
+        .goal-card h4::after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+            bottom: 0;
+            left: 0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Журнал прогресса</h1>
-            <p class="subtitle">Последние обновления и достижения в нашем проекте</p>
-        </header>
-        
-        <div class="timeline">
-            <div class="post">
-                <span class="post-date">15 мая 2024</span>
-                <h3 class="post-title">Старт проекта</h3>
-                <div class="post-content">
-                    <p>Сегодня мы официально начали работу над новым веб-приложением. Провели брифинг с командой, определили основные цели и разделили задачи. Главный фокус первой недели — проектирование архитектуры и создание прототипа.</p>
-                    <p>Уже настроили рабочее окружение и подготовили репозиторий на GitHub.</p>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>MetaAvatar</span>
                 </div>
-                <div class="post-footer">
-                    <div class="post-author">
-                        <div class="author-avatar">ИП</div>
-                        <span class="author-name">Иван Петров</span>
-                    </div>
-                    <div class="post-tags">
-                        <span class="tag">старт</span>
-                        <span class="tag">планирование</span>
-                        <span class="tag">встреча</span>
-                    </div>
-                </div>
+                <ul class="nav-links">
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="#">О проекте</a></li>
+                    <li><a href="#">Технологии</a></li>
+                    <li><a href="#">Команда</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Создай свой цифровой образ</h1>
+            <p>Инновационный сервис для генерации реалистичных 3D-аватаров с помощью искусственного интеллекта</p>
+            <a href="#" class="btn">Попробовать демо</a>
+            <a href="#" class="btn btn-outline">Узнать больше</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>О проекте</h2>
             </div>
-            
-            <div class="post">
-                <span class="post-date">22 мая 2024</span>
-                <h3 class="post-title">Первый работающий прототип</h3>
-                <div class="post-content">
-                    <p>Завершили работу над основными компонентами интерфейса. Реализовали систему аутентификации и базовый API. Теперь пользователи могут регистрироваться и создавать свои профили.</p>
-                    <p>Обнаружили несколько проблем с производительностью при загрузке больших данных — это будет основным фокусом на следующей неделе.</p>
-                </div>
-                <div class="post-footer">
-                    <div class="post-author">
-                        <div class="author-avatar">АС</div>
-                        <span class="author-name">Анна Сидорова</span>
-                    </div>
-                    <div class="post-tags">
-                        <span class="tag">разработка</span>
-                        <span class="tag">API</span>
-                        <span class="tag">UI</span>
-                    </div>
-                </div>
+            <div class="card">
+                <h3>Актуальность проекта</h3>
+                <p>Виртуальные миры стремительно набирают популярность, и пользователи хотят уникальные способы самовыражения — реалистичные аватары отвечают этой потребности. Современная индустрия виртуальной реальности (VR) и игр стремительно развивается, предоставляя пользователям всё больше возможностей для взаимодействия в цифровых мирах.</p>
+                <p>Виртуальные миры становятся важной частью цифровой экономики, и пользователи стремятся к более реалистичному и персонализированному самовыражению.</p>
+                <p>Технологии открытого исходного кода (нейронные сети Hunyuan, Trellis) делают возможным быстрый старт бизнеса без колоссальных затрат. Texel предлагает поддержку и менторство, помогая преодолеть барьеры входа в высокотехнологичную сферу. Это особенно актуально для начинающих предпринимателей и студентов, желающих углубить компетенции в AI и VR.</p>
             </div>
-            
-            <div class="post">
-                <span class="post-date">29 мая 2024</span>
-                <h3 class="post-title">Оптимизация и тестирование</h3>
-                <div class="post-content">
-                    <p>Провели серию нагрузочных тестов и значительно улучшили производительность системы. Оптимизировали запросы к базе данных и реализовали кэширование.</p>
-                    <p>Команда дизайнеров завершила работу над мобильной версией приложения. Осталось протестировать на различных устройствах.</p>
+        </div>
+    </section>
+
+    <section id="problems">
+        <div class="container">
+            <div class="section-title">
+                <h2>Проблематика проекта</h2>
+            </div>
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h4>Ограниченные возможности персонализации</h4>
+                    <p>Существующие решения зачастую предлагают либо стилизованные модели, либо требуют сложных инструментов для создания реалистичных 3D-аватаров.</p>
                 </div>
-                <div class="post-footer">
-                    <div class="post-author">
-                        <div class="author-avatar">МК</div>
-                        <span class="author-name">Максим Козлов</span>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-door-open"></i>
                     </div>
-                    <div class="post-tags">
-                        <span class="tag">оптимизация</span>
-                        <span class="tag">тестирование</span>
-                        <span class="tag">дизайн</span>
+                    <h4>Высокий порог входа</h4>
+                    <p>Начинающим предпринимателям и студентам сложно запустить бизнес в сфере VR и 3D-моделирования из-за нехватки знаний, технологий и инвестиций.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-meh"></i>
                     </div>
+                    <h4>Недостаточная выразительность</h4>
+                    <p>Многим людям не хватает инструментов для создания 3D-аватаров, которые соответствуют их реальному внешнему виду или воображаемому образу.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Рост потребности в AI-компетенциях</h4>
+                    <p>Навыки работы с искусственным интеллектом крайне востребованы на рынке, однако их освоение требует значительных ресурсов.</p>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="essence">
+        <div class="container">
+            <div class="section-title">
+                <h2>Суть проекта</h2>
+            </div>
+            <div class="card">
+                <p>Проект представляет собой сервис, позволяющий пользователям быстро и просто создавать реалистичные 3D-аватары, совместимые с популярными VR-платформами (VRChat, Roblox, Horizon Worlds) и игровыми движками. В рамках проекта предусмотрено обучение и поддержка предпринимателей, желающих развивать собственные стартапы в области VR и AI.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="goals">
+        <div class="container">
+            <div class="section-title">
+                <h2>Цели проекта</h2>
+            </div>
+            <div class="features">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h4>Создать интуитивно понятный сервис</h4>
+                    <p>Для генерации высококачественных 3D-аватаров с возможностью их экспорта в VR и игровые движки.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Обучить участников</h4>
+                    <p>Основам бизнеса в VR – от разработки MVP до поиска инвестиций.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h4>Обеспечить практическое обучение</h4>
+                    <p>Технологиям нейронных сетей (Hunyuan, Trellis) и интеграции с игровыми платформами.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>Развивать навыки работы с AI</h4>
+                    <p>И обучать эффективному использованию ChatGPT для бизнеса.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="problems">
+        <div class="container">
+            <div class="section-title">
+                <h2>Проблематика проекта</h2>
+                <p>Ключевые проблемы, которые мы решаем</p>
+            </div>
+            <div class="problems-container">
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h4>Ограниченные возможности персонализации</h4>
+                    <p>Существующие решения предлагают либо шаблонные стилизованные модели, либо требуют профессиональных навыков 3D-моделирования для создания реалистичных аватаров.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <h4>Высокий порог входа</h4>
+                    <p>Начинающим предпринимателям и студентам недоступны инструменты для старта в сфере VR из-за сложности технологий и необходимости больших инвестиций.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-meh"></i>
+                    </div>
+                    <h4>Недостаточная выразительность</h4>
+                    <p>Пользователи не могут создать аватар, который точно отражает их личность — ни реальную внешность, ни креативные фантазийные образы.</p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h4>Дефицит AI-компетенций</h4>
+                    <p>Рынок испытывает острую нехватку специалистов, способных применять современные AI-технологии в практических проектах.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="goals">
+        <div class="container">
+            <div class="section-title">
+                <h2>Цели проекта</h2>
+                <p>Что мы планируем достичь</p>
+            </div>
+            <div class="goals-container">
+                <div class="goal-card">
+                    <div class="goal-number">01</div>
+                    <div class="goal-icon">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h4>Интуитивный сервис</h4>
+                    <p>Создать простой в использовании инструмент для генерации качественных 3D-аватаров с возможностью экспорта в популярные VR-платформы.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-number">02</div>
+                    <div class="goal-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4>Образовательная программа</h4>
+                    <p>Обучить участников основам VR-бизнеса: от разработки MVP до привлечения инвестиций.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-number">03</div>
+                    <div class="goal-icon">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <h4>Практические навыки</h4>
+                    <p>Дать практический опыт работы с нейросетевыми технологиями (Hunyuan, Trellis) и их интеграцией.</p>
+                </div>
+                <div class="goal-card">
+                    <div class="goal-number">04</div>
+                    <div class="goal-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI-компетенции</h4>
+                    <p>Развить навыки работы с искусственным интеллектом, включая эффективное использование ChatGPT для бизнес-задач.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>MetaAvatar</h3>
+                    <p>Инновационный сервис для создания 3D-аватаров с использованием искусственного интеллекта.</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> info@metaavatar.com</li>
+                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Цифровая, 42</li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Соцсети</h3>
+                    <ul>
+                        <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
+                        <li><a href="#"><i class="fab fa-vk"></i> ВКонтакте</a></li>
+                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2024 MetaAvatar. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

@@ -50,9 +50,9 @@ header {
     overflow-x: hidden;
     height: 130px;
     overflow: hidden;
-    isolation: isolate;
     position: fixed;
     width: 100%;
+    z-index: 1;
 }
 
 /* 3D аватары на фоне */
