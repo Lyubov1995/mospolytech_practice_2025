@@ -1,733 +1,484 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MetaAvatar - О проекте</title>
+    <title>О проекте</title>
+    <link rel="icon" href="../images/icon.png" type="image/png">
+    <link rel="stylesheet" type="text/css" href="../css/style.css">
+    <link rel="stylesheet" type="text/css" href="../css/about.css">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/noto-serif-condensed" type="text/css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="../js/script.js"></script>
     <style>
-        :root {
-            --primary: #5e35b1;
-            --secondary: #3949ab;
-            --accent: #7c4dff;
-            --dark: #1a237e;
-            --light: #e8eaf6;
-            --text: #212121;
-            --text-light: #757575;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f5f5;
-            color: var(--text);
-            line-height: 1.6;
-        }
-        
-        .container {
+        /* Основные стили для двухколоночного макета */
+        .tech-demo-container {
+            display: flex;
+            gap: 30px;
+            margin: 40px auto;
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
         }
         
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
+        .tech-accordion {
+            width: 45%;
+            order: 2; /* Перемещаем технологии вправо */
+        }
+        
+        .code-demo {
+            width: 55%;
+            order: 1; /* Перемещаем код влево */
+            background: #282c34;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        /* Стили для аккордеона технологий (теперь справа) */
+        .tech-item {
+            margin-bottom: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .tech-header {
+            padding: 18px 25px;
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
             color: white;
-            padding: 20px 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        nav {
+            cursor: pointer;
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-        
-        .logo {
-            font-size: 24px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo i {
-            margin-right: 10px;
-            color: var(--accent);
-        }
-        
-        .nav-links {
-            display: flex;
-            list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 25px;
-        }
-        
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
             transition: all 0.3s ease;
-            position: relative;
         }
         
-        .nav-links a:hover {
-            color: var(--accent);
+        .tech-header:hover {
+            background: linear-gradient(135deg, #5e35b1, #78c3be);
         }
         
-        .hero {
-            background: linear-gradient(rgba(30, 27, 75, 0.8), rgba(30, 27, 75, 0.8)), url('https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
+        .tech-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
         }
         
-        .hero h1 {
-            font-size: 2.8rem;
-            margin-bottom: 20px;
-        }
-        
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 30px;
-        }
-        
-        .btn {
-            display: inline-block;
-            background: var(--accent);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 10px 5px;
-            box-shadow: 0 4px 15px rgba(124, 77, 255, 0.4);
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(124, 77, 255, 0.6);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            border: 2px solid white;
-        }
-        
-        .btn-outline:hover {
-            background: white;
-            color: var(--primary);
-        }
-        
-        section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            font-size: 2.2rem;
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-            padding-bottom: 15px;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 4px;
-            background: var(--accent);
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-        
-        .card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
-        }
-        
-        .card h3 {
-            color: var(--primary);
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
-        
-        .card p, .card ul {
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-        
-        .card ul {
-            padding-left: 20px;
-        }
-        
-        .card li {
-            margin-bottom: 8px;
-        }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .feature-item {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        .tech-header i {
             transition: transform 0.3s ease;
         }
         
-        .feature-item:hover {
-            transform: translateY(-10px);
+        .tech-item.active .tech-header i {
+            transform: rotate(180deg);
         }
         
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--accent);
-            margin-bottom: 15px;
+        .tech-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
         }
         
-        .feature-item h4 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--primary);
+        .tech-item.active .tech-content {
+            max-height: 1000px;
         }
         
-        .timeline {
-            position: relative;
-            max-width: 1000px;
-            margin: 40px auto 0;
-        }
-        
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background: var(--light);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            margin-left: -2px;
-            border-radius: 2px;
-        }
-        
-        .timeline-item {
-            padding: 10px 40px;
-            position: relative;
-            width: 50%;
-            box-sizing: border-box;
-        }
-        
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: var(--accent);
-            border-radius: 50%;
-            top: 15px;
-            z-index: 1;
-        }
-        
-        .left {
-            left: 0;
-        }
-        
-        .right {
-            left: 50%;
-        }
-        
-        .left::after {
-            right: -10px;
-        }
-        
-        .right::after {
-            left: -10px;
-        }
-        
-        .timeline-content {
+        .tech-description {
             padding: 20px;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
         
-        .timeline-content h4 {
-            color: var(--primary);
-            margin-bottom: 10px;
+        /* Стили для демонстрации кода */
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+            background: #1e1e1e;
+            color: #9da5b4;
         }
         
-        .timeline-date {
-            color: var(--accent);
-            font-weight: bold;
-            margin-bottom: 10px;
+        .code-tabs {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .code-tab {
+            padding: 5px 12px;
+            background: #2d2d2d;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+        
+        .code-tab.active {
+            background: #6e45e2;
+            color: white;
+        }
+        
+        .code-content {
+            display: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .code-content.active {
             display: block;
         }
         
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 50px 0 20px;
+        pre {
+            margin: 0;
+            border-radius: 0;
         }
         
-        .footer-content {
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .hljs {
+            background: #282c34;
+            padding: 20px;
+        }
+        
+        /* Стили для галереи технологий */
+        .tech-gallery {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 40px;
-            margin-bottom: 40px;
+            overflow-x: auto;
+            padding: 15px;
+            gap: 15px;
+            background: #f8f9fa;
         }
         
-        .footer-column {
-            flex: 1;
-            min-width: 200px;
+        .tech-gallery img {
+            height: 150px;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
         
-        .footer-column h3 {
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-column h3::after {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 3px;
-            background: var(--accent);
-            bottom: 0;
-            left: 0;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-column ul li a {
-            color: #ddd;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-column ul li a:hover {
-            color: var(--accent);
-        }
-        
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,0.1);
+        .tech-gallery img:hover {
+            transform: scale(1.05);
         }
         
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
+            .tech-demo-container {
+                flex-direction: column;
             }
             
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .timeline::after {
-                left: 31px;
-            }
-            
-            .timeline-item {
+            .tech-accordion,
+            .code-demo {
                 width: 100%;
-                padding-left: 70px;
-                padding-right: 25px;
+                order: initial;
             }
             
-            .timeline-item::after {
-                left: 18px;
+            .tech-header {
+                padding: 15px 20px;
             }
             
-            .left::after, .right::after {
-                left: 18px;
+            .tech-header h3 {
+                font-size: 1.1rem;
             }
             
-            .right {
-                left: 0;
+            .tech-gallery {
+                flex-direction: column;
             }
-        }
-        .problems-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .problem-card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--accent);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .problem-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        
-        .problem-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-        }
-        
-        .problem-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .problem-card h4 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-        
-        /* Новые стили для целей */
-        .goals-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-        
-        .goal-card {
-            background: white;
-            border-radius: 10px;
-            padding: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-            position: relative;
-            border: 1px solid rgba(124, 77, 255, 0.2);
-        }
-        
-        .goal-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(124, 77, 255, 0.15);
-            border-color: var(--accent);
-        }
-        
-        .goal-number {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 3rem;
-            font-weight: 700;
-            color: rgba(124, 77, 255, 0.1);
-            line-height: 1;
-        }
-        
-        .goal-icon {
-            font-size: 2rem;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
-        
-        .goal-card h4 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--primary);
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .goal-card h4::after {
-            content: '';
-            position: absolute;
-            width: 40px;
-            height: 3px;
-            background: var(--accent);
-            bottom: 0;
-            left: 0;
+            
+            .tech-gallery img {
+                width: 100%;
+                height: auto;
+            }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <i class="fas fa-user-astronaut"></i>
-                    <span>MetaAvatar</span>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#">Главная</a></li>
-                    <li><a href="#">О проекте</a></li>
-                    <li><a href="#">Технологии</a></li>
-                    <li><a href="#">Команда</a></li>
-                    <li><a href="#">Контакты</a></li>
-                </ul>
+    <header>     
+        <div class="parallax-bg"></div>
+        <div class="header-container">
+            <a class="header-logo">AVATAR3D</a>
+            <nav class="nav-menu">
+                <a href="index.html">Главная</a>
+                <a href="about.html" class="active">О проекте</a>
+                <a href="members.html">Участники</a>
+                <a href="journal.html">Журнал</a>
+                <a href="resources.html">Ресурсы</a>
             </nav>
         </div>
     </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1>Создай свой цифровой образ</h1>
-            <p>Инновационный сервис для генерации реалистичных 3D-аватаров с помощью искусственного интеллекта</p>
-            <a href="#" class="btn">Попробовать демо</a>
-            <a href="#" class="btn btn-outline">Узнать больше</a>
-        </div>
-    </section>
+    <div class="about_box">
+        <section class="tech-section">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Технологии и реализация</h2>
+                    <p>Изучите используемые технологии и примеры кода</p>
+                </div>
+                
+                <div class="tech-demo-container">
+                    <!-- Левая колонка - код -->
+                    <div class="code-demo">
+                        <div class="code-header">
+                            <div class="code-title">Примеры реализации: <span id="current-tech">Hunyuan API</span></div>
+                            <div class="code-tabs">
+                                <div class="code-tab active" data-lang="python">Python</div>
+                                <div class="code-tab" data-lang="javascript">JavaScript</div>
+                                <div class="code-tab" data-lang="csharp">C#</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Контент для Hunyuan -->
+                        <div class="code-content active" data-tech="hunyuan">
+                            <pre><code class="language-python"># Пример интеграции с Hunyuan API
+import requests
+import json
 
-    <section id="about">
-        <div class="container">
-            <div class="section-title">
-                <h2>О проекте</h2>
-            </div>
-            <div class="card">
-                <h3>Актуальность проекта</h3>
-                <p>Виртуальные миры стремительно набирают популярность, и пользователи хотят уникальные способы самовыражения — реалистичные аватары отвечают этой потребности. Современная индустрия виртуальной реальности (VR) и игр стремительно развивается, предоставляя пользователям всё больше возможностей для взаимодействия в цифровых мирах.</p>
-                <p>Виртуальные миры становятся важной частью цифровой экономики, и пользователи стремятся к более реалистичному и персонализированному самовыражению.</p>
-                <p>Технологии открытого исходного кода (нейронные сети Hunyuan, Trellis) делают возможным быстрый старт бизнеса без колоссальных затрат. Texel предлагает поддержку и менторство, помогая преодолеть барьеры входа в высокотехнологичную сферу. Это особенно актуально для начинающих предпринимателей и студентов, желающих углубить компетенции в AI и VR.</p>
-            </div>
-        </div>
-    </section>
+def generate_avatar_description(prompt):
+    api_url = "https://api.hunyuan.ai/v1/generate"
+    headers = {
+        "Authorization": "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "prompt": f"Создай подробное описание 3D аватара: {prompt}",
+        "max_tokens": 300,
+        "temperature": 0.7
+    }
+    
+    response = requests.post(api_url, headers=headers, json=payload)
+    if response.status_code == 200:
+        return response.json()["choices"][0]["text"]
+    else:
+        raise Exception(f"API Error: {response.text}")
 
-    <section id="problems">
-        <div class="container">
-            <div class="section-title">
-                <h2>Проблематика проекта</h2>
-            </div>
-            <div class="features">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-cog"></i>
-                    </div>
-                    <h4>Ограниченные возможности персонализации</h4>
-                    <p>Существующие решения зачастую предлагают либо стилизованные модели, либо требуют сложных инструментов для создания реалистичных 3D-аватаров.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-door-open"></i>
-                    </div>
-                    <h4>Высокий порог входа</h4>
-                    <p>Начинающим предпринимателям и студентам сложно запустить бизнес в сфере VR и 3D-моделирования из-за нехватки знаний, технологий и инвестиций.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-meh"></i>
-                    </div>
-                    <h4>Недостаточная выразительность</h4>
-                    <p>Многим людям не хватает инструментов для создания 3D-аватаров, которые соответствуют их реальному внешнему виду или воображаемому образу.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h4>Рост потребности в AI-компетенциях</h4>
-                    <p>Навыки работы с искусственным интеллектом крайне востребованы на рынке, однако их освоение требует значительных ресурсов.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+# Использование
+description = generate_avatar_description(
+    "Киберпанк персонаж женского пола с неоновыми волосами"
+)
+print(description)</code></pre>
+                        </div>
+                        
+                        <!-- Контент для Trellis -->
+                        <div class="code-content" data-tech="trellis">
+                            <pre><code class="language-python"># Генерация 3D модели с Trellis API
+import requests
 
-    <section id="essence">
-        <div class="container">
-            <div class="section-title">
-                <h2>Суть проекта</h2>
-            </div>
-            <div class="card">
-                <p>Проект представляет собой сервис, позволяющий пользователям быстро и просто создавать реалистичные 3D-аватары, совместимые с популярными VR-платформами (VRChat, Roblox, Horizon Worlds) и игровыми движками. В рамках проекта предусмотрено обучение и поддержка предпринимателей, желающих развивать собственные стартапы в области VR и AI.</p>
-            </div>
-        </div>
-    </section>
+def generate_3d_model(description):
+    url = "https://api.trellis3d.ai/v1/generate"
+    headers = {
+        "Authorization": "Bearer YOUR_TRELLIS_KEY",
+        "Content-Type": "application/json"
+    }
+    data = {
+        "description": description,
+        "style_preset": "cyberpunk",
+        "output_format": "glb"
+    }
+    
+    response = requests.post(url, json=data, headers=headers)
+    if response.status_code == 200:
+        return response.json()["model_url"]
+    else:
+        raise Exception("Ошибка генерации модели")
 
-    <section id="goals">
-        <div class="container">
-            <div class="section-title">
-                <h2>Цели проекта</h2>
-            </div>
-            <div class="features">
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-cube"></i>
-                    </div>
-                    <h4>Создать интуитивно понятный сервис</h4>
-                    <p>Для генерации высококачественных 3D-аватаров с возможностью их экспорта в VR и игровые движки.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4>Обучить участников</h4>
-                    <p>Основам бизнеса в VR – от разработки MVP до поиска инвестиций.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h4>Обеспечить практическое обучение</h4>
-                    <p>Технологиям нейронных сетей (Hunyuan, Trellis) и интеграции с игровыми платформами.</p>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h4>Развивать навыки работы с AI</h4>
-                    <p>И обучать эффективному использованию ChatGPT для бизнеса.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+# Пример использования
+model_url = generate_3d_model(
+    "Женский персонаж в стиле киберпанк с неоновыми волосами"
+)
+print(f"Модель доступна по адресу: {model_url}")</code></pre>
+                        </div>
+                        
+                        <!-- Контент для Blender -->
+                        <div class="code-content" data-tech="blender">
+                            <pre><code class="language-python"># Автоматизация Blender с Python
+import bpy
+import os
 
-    <section id="problems">
-        <div class="container">
-            <div class="section-title">
-                <h2>Проблематика проекта</h2>
-                <p>Ключевые проблемы, которые мы решаем</p>
-            </div>
-            <div class="problems-container">
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <i class="fas fa-user-cog"></i>
-                    </div>
-                    <h4>Ограниченные возможности персонализации</h4>
-                    <p>Существующие решения предлагают либо шаблонные стилизованные модели, либо требуют профессиональных навыков 3D-моделирования для создания реалистичных аватаров.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <i class="fas fa-door-open"></i>
-                    </div>
-                    <h4>Высокий порог входа</h4>
-                    <p>Начинающим предпринимателям и студентам недоступны инструменты для старта в сфере VR из-за сложности технологий и необходимости больших инвестиций.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <i class="fas fa-meh"></i>
-                    </div>
-                    <h4>Недостаточная выразительность</h4>
-                    <p>Пользователи не могут создать аватар, который точно отражает их личность — ни реальную внешность, ни креативные фантазийные образы.</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <h4>Дефицит AI-компетенций</h4>
-                    <p>Рынок испытывает острую нехватку специалистов, способных применять современные AI-технологии в практических проектах.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+def optimize_model(filepath):
+    # Импорт GLB модели
+    bpy.ops.import_scene.gltf(filepath=filepath)
+    
+    # Оптимизация модели
+    for obj in bpy.context.scene.objects:
+        if obj.type == 'MESH':
+            # Автоматическое сглаживание
+            bpy.context.view_layer.objects.active = obj
+            bpy.ops.object.modifier_add(type='DECIMATE')
+            bpy.context.object.modifiers["Decimate"].ratio = 0.5
+            
+            # Автоматический UV-маппинг
+            bpy.ops.object.mode_set(mode='EDIT')
+            bpy.ops.uv.smart_project()
+            bpy.ops.object.mode_set(mode='OBJECT')
+    
+    # Экспорт оптимизированной модели
+    output_path = os.path.splitext(filepath)[0] + "_optimized.glb"
+    bpy.ops.export_scene.gltf(filepath=output_path)
+    
+    return output_path
 
-    <section id="goals">
-        <div class="container">
-            <div class="section-title">
-                <h2>Цели проекта</h2>
-                <p>Что мы планируем достичь</p>
+# Пример использования
+optimized_model = optimize_model("character.glb")
+print(f"Оптимизированная модель сохранена: {optimized_model}")</code></pre>
+                        </div>
+                    </div>
+                    
+                    <!-- Правая колонка - технологии -->
+                    <div class="tech-accordion">
+                        <div class="tech-item active" data-tech="hunyuan">
+                            <div class="tech-header">
+                                <h3>Hunyuan API</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="tech-content" style="max-height: 1000px;">
+                                <div class="tech-description">
+                                    <p>Интеграция с языковой моделью Hunyuan для обработки текстовых запросов и генерации описаний аватаров.</p>
+                                    <p><strong>Основные функции:</strong></p>
+                                    <ul>
+                                        <li>Анализ естественного языка</li>
+                                        <li>Генерация текстовых описаний</li>
+                                        <li>Персонализация на основе предпочтений</li>
+                                    </ul>
+                                </div>
+                                <div class="tech-gallery">
+                                    <img src="https://images.unsplash.com/photo-1640562345810-6b00b5ef4a1b?q=80&w=1000&auto=format&fit=crop" alt="Hunyuan AI">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tech-item" data-tech="trellis">
+                            <div class="tech-header">
+                                <h3>Trellis 3D</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="tech-content">
+                                <div class="tech-description">
+                                    <p>Генерация 3D-моделей по текстовым описаниям с помощью Trellis API.</p>
+                                    <p><strong>Ключевые возможности:</strong></p>
+                                    <ul>
+                                        <li>Создание базовой mesh-модели</li>
+                                        <li>Автоматический UV-маппинг</li>
+                                        <li>Экспорт в формате GLB</li>
+                                    </ul>
+                                </div>
+                                <div class="tech-gallery">
+                                    <img src="https://images.unsplash.com/photo-1660649552511-8e168b1e4a0e?q=80&w=1000&auto=format&fit=crop" alt="Trellis">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tech-item" data-tech="blender">
+                            <div class="tech-header">
+                                <h3>Blender Python API</h3>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="tech-content">
+                                <div class="tech-description">
+                                    <p>Автоматизация постобработки 3D-моделей с помощью скриптов Blender.</p>
+                                    <p><strong>Основные задачи:</strong></p>
+                                    <ul>
+                                        <li>Оптимизация полигонов</li>
+                                        <li>Настройка материалов</li>
+                                        <li>Подготовка к анимации</li>
+                                    </ul>
+                                </div>
+                                <div class="tech-gallery">
+                                    <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=1000&auto=format&fit=crop" alt="Blender">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="goals-container">
-                <div class="goal-card">
-                    <div class="goal-number">01</div>
-                    <div class="goal-icon">
-                        <i class="fas fa-cube"></i>
-                    </div>
-                    <h4>Интуитивный сервис</h4>
-                    <p>Создать простой в использовании инструмент для генерации качественных 3D-аватаров с возможностью экспорта в популярные VR-платформы.</p>
-                </div>
-                <div class="goal-card">
-                    <div class="goal-number">02</div>
-                    <div class="goal-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <h4>Образовательная программа</h4>
-                    <p>Обучить участников основам VR-бизнеса: от разработки MVP до привлечения инвестиций.</p>
-                </div>
-                <div class="goal-card">
-                    <div class="goal-number">03</div>
-                    <div class="goal-icon">
-                        <i class="fas fa-network-wired"></i>
-                    </div>
-                    <h4>Практические навыки</h4>
-                    <p>Дать практический опыт работы с нейросетевыми технологиями (Hunyuan, Trellis) и их интеграцией.</p>
-                </div>
-                <div class="goal-card">
-                    <div class="goal-number">04</div>
-                    <div class="goal-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <h4>AI-компетенции</h4>
-                    <p>Развить навыки работы с искусственным интеллектом, включая эффективное использование ChatGPT для бизнес-задач.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>MetaAvatar</h3>
-                    <p>Инновационный сервис для создания 3D-аватаров с использованием искусственного интеллекта.</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Контакты</h3>
-                    <ul>
-                        <li><i class="fas fa-envelope"></i> info@metaavatar.com</li>
-                        <li><i class="fas fa-phone"></i> +7 (495) 123-45-67</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Москва, ул. Цифровая, 42</li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Соцсети</h3>
-                    <ul>
-                        <li><a href="#"><i class="fab fa-telegram"></i> Telegram</a></li>
-                        <li><a href="#"><i class="fab fa-vk"></i> ВКонтакте</a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2024 MetaAvatar. Все права защищены.</p>
-            </div>
+    <footer class="site-footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#6e44ff"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#6e44ff"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#6e44ff"></path>
+            </svg>
         </div>
     </footer>
+
+    <script>
+        // Инициализация подсветки кода
+        document.addEventListener('DOMContentLoaded', function() {
+            hljs.highlightAll();
+            
+            // Обработчики для аккордеона технологий
+            const techItems = document.querySelectorAll('.tech-item');
+            techItems.forEach(item => {
+                const header = item.querySelector('.tech-header');
+                header.addEventListener('click', () => {
+                    // Закрываем все открытые элементы
+                    techItems.forEach(otherItem => {
+                        if (otherItem !== item && otherItem.classList.contains('active')) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Открываем/закрываем текущий элемент
+                    item.classList.toggle('active');
+                    
+                    // Если элемент открывается - показываем соответствующий код
+                    if (item.classList.contains('active')) {
+                        const tech = item.getAttribute('data-tech');
+                        showTechCode(tech);
+                    }
+                });
+            });
+            
+            // Переключение между вкладками с кодом
+            const codeTabs = document.querySelectorAll('.code-tab');
+            codeTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const lang = tab.getAttribute('data-lang');
+                    
+                    // Удаляем активный класс у всех вкладок
+                    codeTabs.forEach(t => t.classList.remove('active'));
+                    
+                    // Добавляем активный класс текущей вкладке
+                    tab.classList.add('active');
+                    
+                    // Находим активную технологию
+                    const activeTech = document.querySelector('.tech-item.active').getAttribute('data-tech');
+                    
+                    // Показываем код для выбранного языка и технологии
+                    showTechCode(activeTech, lang);
+                });
+            });
+            
+            // Функция для отображения кода соответствующей технологии
+            function showTechCode(tech, lang = 'python') {
+                // Скрываем весь код
+                document.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
+                
+                // Показываем код для выбранной технологии и языка
+                const codeContent = document.querySelector(`.code-content[data-tech="${tech}"]`);
+                if (codeContent) {
+                    codeContent.classList.add('active');
+                    
+                    // Обновляем заголовок
+                    const techName = document.querySelector(`.tech-item[data-tech="${tech}"] h3`).textContent;
+                    document.getElementById('current-tech').textContent = techName;
+                    
+                    // Переинициализируем подсветку синтаксиса
+                    hljs.highlightAll();
+                }
+            }
+            
+            // Автоматическое изменение высоты пре для красивого отображения
+            function adjustPreHeight() {
+                document.querySelectorAll('pre').forEach(pre => {
+                    const code = pre.querySelector('code');
+                    pre.style.height = `${code.offsetHeight + 40}px`;
+                });
+            }
+            
+            window.addEventListener('load', adjustPreHeight);
+            window.addEventListener('resize', adjustPreHeight);
+        });
+    </script>
 </body>
 </html>
