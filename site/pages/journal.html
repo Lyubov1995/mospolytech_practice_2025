@@ -1,483 +1,293 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>О проекте</title>
-    <link rel="icon" href="../images/icon.png" type="image/png">
-    <link rel="stylesheet" type="text/css" href="../css/style.css">
-    <link rel="stylesheet" type="text/css" href="../css/about.css">
-    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/noto-serif-condensed" type="text/css"/>
+    <title>Проблемное поле проекта</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800&family=Exo+2:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-    <script src="../js/script.js"></script>
     <style>
-        /* Основные стили для двухколоночного макета */
-        .tech-demo-container {
-            display: flex;
-            gap: 30px;
-            margin: 40px auto;
-            max-width: 1200px;
+        :root {
+            --primary: #7B2CBF;
+            --secondary: #E9C46A;
+            --accent: #F94144;
+            --dark: #14213D;
+            --light: #F8F9FA;
         }
         
-        .tech-accordion {
-            width: 45%;
-            order: 2; /* Перемещаем технологии вправо */
-        }
-        
-        .code-demo {
-            width: 55%;
-            order: 1; /* Перемещаем код влево */
-            background: #282c34;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-        
-        /* Стили для аккордеона технологий (теперь справа) */
-        .tech-item {
-            margin-bottom: 15px;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            background: white;
-        }
-        
-        .tech-header {
-            padding: 18px 25px;
-            background: linear-gradient(135deg, #6e45e2, #88d3ce);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.3s ease;
-        }
-        
-        .tech-header:hover {
-            background: linear-gradient(135deg, #5e35b1, #78c3be);
-        }
-        
-        .tech-header h3 {
+        body {
+            font-family: 'Exo 2', sans-serif;
             margin: 0;
-            font-size: 1.3rem;
-        }
-        
-        .tech-header i {
-            transition: transform 0.3s ease;
-        }
-        
-        .tech-item.active .tech-header i {
-            transform: rotate(180deg);
-        }
-        
-        .tech-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-        
-        .tech-item.active .tech-content {
-            max-height: 1000px;
-        }
-        
-        .tech-description {
-            padding: 20px;
-            background: white;
-        }
-        
-        /* Стили для демонстрации кода */
-        .code-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 20px;
-            background: #1e1e1e;
-            color: #9da5b4;
-        }
-        
-        .code-tabs {
-            display: flex;
-            gap: 10px;
-        }
-        
-        .code-tab {
-            padding: 5px 12px;
-            background: #2d2d2d;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s ease;
-        }
-        
-        .code-tab.active {
-            background: #6e45e2;
-            color: white;
-        }
-        
-        .code-content {
-            display: none;
             padding: 0;
-            margin: 0;
+            background-color: #0A0F1F;
+            color: var(--light);
+            overflow-x: hidden;
+            perspective: 1000px;
         }
         
-        .code-content.active {
-            display: block;
-        }
-        
-        pre {
-            margin: 0;
-            border-radius: 0;
-        }
-        
-        code {
-            font-family: 'Fira Code', monospace;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-        
-        .hljs {
-            background: #282c34;
-            padding: 20px;
-        }
-        
-        /* Стили для галереи технологий */
-        .tech-gallery {
+        .space-container {
+            min-height: 100vh;
             display: flex;
-            overflow-x: auto;
-            padding: 15px;
-            gap: 15px;
-            background: #f8f9fa;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
         }
         
-        .tech-gallery img {
-            height: 150px;
-            border-radius: 6px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0));
+            background-size: 100px 100px;
+            animation: twinkle 5s infinite;
         }
         
-        .tech-gallery img:hover {
-            transform: scale(1.05);
+        @keyframes twinkle {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+        
+        .title-container {
+            text-align: center;
+            margin-bottom: 60px;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotateX(5deg); }
+            50% { transform: translateY(-20px) rotateX(5deg); }
+        }
+        
+        h1 {
+            font-family: 'Kanit', sans-serif;
+            font-size: 3.5rem;
+            margin: 0;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 3px;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            margin-top: 20px;
+            opacity: 0.8;
+            max-width: 700px;
+        }
+        
+        .problem-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            transform-style: preserve-3d;
+        }
+        
+        .problem-card {
+            background: rgba(20, 33, 61, 0.7);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(123, 44, 191, 0.3);
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233, 196, 106, 0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+        
+        .problem-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 15px 40px rgba(123, 44, 191, 0.4);
+            border-color: rgba(233, 196, 106, 0.5);
+        }
+        
+        .problem-card:hover::before {
+            transform: rotate(0);
+        }
+        
+        .problem-number {
+            font-family: 'Kanit', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary);
+            margin-bottom: 15px;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .problem-number::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .problem-title {
+            font-family: 'Kanit', sans-serif;
+            font-size: 1.5rem;
+            margin: 15px 0;
+            color: var(--secondary);
+        }
+        
+        .problem-desc {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            opacity: 0.9;
+        }
+        
+        .highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        
+        .floating-orb {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(123, 44, 191, 0.15) 0%, transparent 70%);
+            filter: blur(30px);
+            z-index: -1;
+            animation: orb-float 15s ease-in-out infinite;
+        }
+        
+        .orb-1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes orb-float {
+            0%, 100% { transform: translate(0, 0); }
+            25% { transform: translate(50px, 50px); }
+            50% { transform: translate(0, 100px); }
+            75% { transform: translate(-50px, 50px); }
         }
         
         @media (max-width: 768px) {
-            .tech-demo-container {
-                flex-direction: column;
+            .problem-matrix {
+                grid-template-columns: 1fr;
             }
             
-            .tech-accordion,
-            .code-demo {
-                width: 100%;
-                order: initial;
+            h1 {
+                font-size: 2.5rem;
             }
             
-            .tech-header {
-                padding: 15px 20px;
-            }
-            
-            .tech-header h3 {
+            .subtitle {
                 font-size: 1.1rem;
-            }
-            
-            .tech-gallery {
-                flex-direction: column;
-            }
-            
-            .tech-gallery img {
-                width: 100%;
-                height: auto;
             }
         }
     </style>
 </head>
 <body>
-    <header>     
-        <div class="parallax-bg"></div>
-        <div class="header-container">
-            <a class="header-logo">AVATAR3D</a>
-            <nav class="nav-menu">
-                <a href="index.html">Главная</a>
-                <a href="about.html" class="active">О проекте</a>
-                <a href="members.html">Участники</a>
-                <a href="journal.html">Журнал</a>
-                <a href="resources.html">Ресурсы</a>
-            </nav>
+    <div class="space-container">
+        <div class="stars"></div>
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        
+        <div class="title-container">
+            <h1>Проблемное поле</h1>
+            <p class="subtitle">Ключевые вызовы в создании цифровых идентичностей нового поколения</p>
         </div>
-    </header>
-
-    <div class="about_box">
-        <section class="tech-section">
-            <div class="container">
-                <div class="section-title">
-                    <h2>Технологии и реализация</h2>
-                    <p>Изучите используемые технологии и примеры кода</p>
-                </div>
-                
-                <div class="tech-demo-container">
-                    <!-- Левая колонка - код -->
-                    <div class="code-demo">
-                        <div class="code-header">
-                            <div class="code-title">Примеры реализации: <span id="current-tech">Hunyuan API</span></div>
-                            <div class="code-tabs">
-                                <div class="code-tab active" data-lang="python">Python</div>
-                                <div class="code-tab" data-lang="javascript">JavaScript</div>
-                                <div class="code-tab" data-lang="csharp">C#</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Контент для Hunyuan -->
-                        <div class="code-content active" data-tech="hunyuan">
-                            <pre><code class="language-python"># Пример интеграции с Hunyuan API
-import requests
-import json
-
-def generate_avatar_description(prompt):
-    api_url = "https://api.hunyuan.ai/v1/generate"
-    headers = {
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "prompt": f"Создай подробное описание 3D аватара: {prompt}",
-        "max_tokens": 300,
-        "temperature": 0.7
-    }
-    
-    response = requests.post(api_url, headers=headers, json=payload)
-    if response.status_code == 200:
-        return response.json()["choices"][0]["text"]
-    else:
-        raise Exception(f"API Error: {response.text}")
-
-# Использование
-description = generate_avatar_description(
-    "Киберпанк персонаж женского пола с неоновыми волосами"
-)
-print(description)</code></pre>
-                        </div>
-                        
-                        <!-- Контент для Trellis -->
-                        <div class="code-content" data-tech="trellis">
-                            <pre><code class="language-python"># Генерация 3D модели с Trellis API
-import requests
-
-def generate_3d_model(description):
-    url = "https://api.trellis3d.ai/v1/generate"
-    headers = {
-        "Authorization": "Bearer YOUR_TRELLIS_KEY",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "description": description,
-        "style_preset": "cyberpunk",
-        "output_format": "glb"
-    }
-    
-    response = requests.post(url, json=data, headers=headers)
-    if response.status_code == 200:
-        return response.json()["model_url"]
-    else:
-        raise Exception("Ошибка генерации модели")
-
-# Пример использования
-model_url = generate_3d_model(
-    "Женский персонаж в стиле киберпанк с неоновыми волосами"
-)
-print(f"Модель доступна по адресу: {model_url}")</code></pre>
-                        </div>
-                        
-                        <!-- Контент для Blender -->
-                        <div class="code-content" data-tech="blender">
-                            <pre><code class="language-python"># Автоматизация Blender с Python
-import bpy
-import os
-
-def optimize_model(filepath):
-    # Импорт GLB модели
-    bpy.ops.import_scene.gltf(filepath=filepath)
-    
-    # Оптимизация модели
-    for obj in bpy.context.scene.objects:
-        if obj.type == 'MESH':
-            # Автоматическое сглаживание
-            bpy.context.view_layer.objects.active = obj
-            bpy.ops.object.modifier_add(type='DECIMATE')
-            bpy.context.object.modifiers["Decimate"].ratio = 0.5
-            
-            # Автоматический UV-маппинг
-            bpy.ops.object.mode_set(mode='EDIT')
-            bpy.ops.uv.smart_project()
-            bpy.ops.object.mode_set(mode='OBJECT')
-    
-    # Экспорт оптимизированной модели
-    output_path = os.path.splitext(filepath)[0] + "_optimized.glb"
-    bpy.ops.export_scene.gltf(filepath=output_path)
-    
-    return output_path
-
-# Пример использования
-optimized_model = optimize_model("character.glb")
-print(f"Оптимизированная модель сохранена: {optimized_model}")</code></pre>
-                        </div>
-                    </div>
-                    
-                    <!-- Правая колонка - технологии -->
-                    <div class="tech-accordion">
-                        <div class="tech-item active" data-tech="hunyuan">
-                            <div class="tech-header">
-                                <h3>Hunyuan API</h3>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="tech-content" style="max-height: 1000px;">
-                                <div class="tech-description">
-                                    <p>Интеграция с языковой моделью Hunyuan для обработки текстовых запросов и генерации описаний аватаров.</p>
-                                    <p><strong>Основные функции:</strong></p>
-                                    <ul>
-                                        <li>Анализ естественного языка</li>
-                                        <li>Генерация текстовых описаний</li>
-                                        <li>Персонализация на основе предпочтений</li>
-                                    </ul>
-                                </div>
-                                <div class="tech-gallery">
-                                    <img src="https://images.unsplash.com/photo-1640562345810-6b00b5ef4a1b?q=80&w=1000&auto=format&fit=crop" alt="Hunyuan AI">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="tech-item" data-tech="trellis">
-                            <div class="tech-header">
-                                <h3>Trellis 3D</h3>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="tech-content">
-                                <div class="tech-description">
-                                    <p>Генерация 3D-моделей по текстовым описаниям с помощью Trellis API.</p>
-                                    <p><strong>Ключевые возможности:</strong></p>
-                                    <ul>
-                                        <li>Создание базовой mesh-модели</li>
-                                        <li>Автоматический UV-маппинг</li>
-                                        <li>Экспорт в формате GLB</li>
-                                    </ul>
-                                </div>
-                                <div class="tech-gallery">
-                                    <img src="https://images.unsplash.com/photo-1660649552511-8e168b1e4a0e?q=80&w=1000&auto=format&fit=crop" alt="Trellis">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="tech-item" data-tech="blender">
-                            <div class="tech-header">
-                                <h3>Blender Python API</h3>
-                                <i class="fas fa-chevron-down"></i>
-                            </div>
-                            <div class="tech-content">
-                                <div class="tech-description">
-                                    <p>Автоматизация постобработки 3D-моделей с помощью скриптов Blender.</p>
-                                    <p><strong>Основные задачи:</strong></p>
-                                    <ul>
-                                        <li>Оптимизация полигонов</li>
-                                        <li>Настройка материалов</li>
-                                        <li>Подготовка к анимации</li>
-                                    </ul>
-                                </div>
-                                <div class="tech-gallery">
-                                    <img src="https://images.unsplash.com/photo-1639762681057-408e52192e55?q=80&w=1000&auto=format&fit=crop" alt="Blender">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        
+        <div class="problem-matrix">
+            <!-- Проблема 1 -->
+            <div class="problem-card">
+                <div class="problem-number">01</div>
+                <h3 class="problem-title">КРИЗИС ПЕРСОНАЛИЗАЦИИ</h3>
+                <p class="problem-desc">Современные платформы предлагают <span class="highlight">ограниченный набор шаблонов</span>, превращая цифровые аватары в безликие клоны. Наши исследования показывают, что 78% пользователей не могут создать аватар, точно отражающий их уникальность.</p>
             </div>
-        </section>
+            
+            <!-- Проблема 2 -->
+            <div class="problem-card">
+                <div class="problem-number">02</div>
+                <h3 class="problem-title">ТЕХНОЛОГИЧЕСКИЙ БАРЬЕР</h3>
+                <p class="problem-desc">Для создания качественных 3D-моделей требуются <span class="highlight">специализированные навыки</span> и дорогостоящее ПО. Это исключает 92% потенциальных пользователей, не имеющих опыта в 3D-моделировании.</p>
+            </div>
+            
+            <!-- Проблема 3 -->
+            <div class="problem-card">
+                <div class="problem-number">03</div>
+                <h3 class="problem-title">ДИСБАЛАНС ВЫРАЗИТЕЛЬНОСТИ</h3>
+                <p class="problem-desc">Большинство решений жертвуют либо <span class="highlight">реализмом</span>, либо <span class="highlight">стилизацией</span>, не предлагая гибких настроек. В результате аватары выглядят либо неестественно, либо слишком карикатурно.</p>
+            </div>
+            
+            <!-- Проблема 4 -->
+            <div class="problem-card">
+                <div class="problem-number">04</div>
+                <h3 class="problem-title">AI-ПРОПАСТЬ</h3>
+                <p class="problem-desc">Разрыв между <span class="highlight">потребностью</span> в AI-решениях и <span class="highlight">доступностью</span> технологий растёт. 85% малого бизнеса не могут внедрить ИИ из-за сложности интеграции и отсутствия экспертизы.</p>
+            </div>
+        </div>
     </div>
 
-    <footer class="site-footer">
-        <div class="footer-wave">
-            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#6e44ff"></path>
-                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#6e44ff"></path>
-                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#6e44ff"></path>
-            </svg>
-        </div>
-    </footer>
-
     <script>
-        // Инициализация подсветки кода
-        document.addEventListener('DOMContentLoaded', function() {
-            hljs.highlightAll();
+        // Параллакс-эффект для карточек
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.problem-card');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
             
-            // Обработчики для аккордеона технологий
-            const techItems = document.querySelectorAll('.tech-item');
-            techItems.forEach(item => {
-                const header = item.querySelector('.tech-header');
-                header.addEventListener('click', () => {
-                    // Закрываем все открытые элементы
-                    techItems.forEach(otherItem => {
-                        if (otherItem !== item && otherItem.classList.contains('active')) {
-                            otherItem.classList.remove('active');
-                        }
-                    });
-                    
-                    // Открываем/закрываем текущий элемент
-                    item.classList.toggle('active');
-                    
-                    // Если элемент открывается - показываем соответствующий код
-                    if (item.classList.contains('active')) {
-                        const tech = item.getAttribute('data-tech');
-                        showTechCode(tech);
-                    }
-                });
-            });
-            
-            // Переключение между вкладками с кодом
-            const codeTabs = document.querySelectorAll('.code-tab');
-            codeTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const lang = tab.getAttribute('data-lang');
-                    
-                    // Удаляем активный класс у всех вкладок
-                    codeTabs.forEach(t => t.classList.remove('active'));
-                    
-                    // Добавляем активный класс текущей вкладке
-                    tab.classList.add('active');
-                    
-                    // Находим активную технологию
-                    const activeTech = document.querySelector('.tech-item.active').getAttribute('data-tech');
-                    
-                    // Показываем код для выбранного языка и технологии
-                    showTechCode(activeTech, lang);
-                });
-            });
-            
-            // Функция для отображения кода соответствующей технологии
-            function showTechCode(tech, lang = 'python') {
-                // Скрываем весь код
-                document.querySelectorAll('.code-content').forEach(c => c.classList.remove('active'));
+            cards.forEach((card, index) => {
+                const rect = card.getBoundingClientRect();
+                const cardCenterX = rect.left + rect.width / 2;
+                const cardCenterY = rect.top + rect.height / 2;
                 
-                // Показываем код для выбранной технологии и языка
-                const codeContent = document.querySelector(`.code-content[data-tech="${tech}"]`);
-                if (codeContent) {
-                    codeContent.classList.add('active');
-                    
-                    // Обновляем заголовок
-                    const techName = document.querySelector(`.tech-item[data-tech="${tech}"] h3`).textContent;
-                    document.getElementById('current-tech').textContent = techName;
-                    
-                    // Переинициализируем подсветку синтаксиса
-                    hljs.highlightAll();
-                }
-            }
-            
-            // Автоматическое изменение высоты пре для красивого отображения
-            function adjustPreHeight() {
-                document.querySelectorAll('pre').forEach(pre => {
-                    const code = pre.querySelector('code');
-                    pre.style.height = `${code.offsetHeight + 40}px`;
-                });
-            }
-            
-            window.addEventListener('load', adjustPreHeight);
-            window.addEventListener('resize', adjustPreHeight);
+                const moveX = (cardCenterX - e.clientX) / 50;
+                const moveY = (cardCenterY - e.clientY) / 50;
+                
+                card.style.transform = `
+                    translateY(-10px) 
+                    rotateX(${moveY * 0.5}deg) 
+                    rotateY(${-moveX * 0.5}deg)
+                `;
+            });
         });
     </script>
 </body>

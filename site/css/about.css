@@ -8,6 +8,19 @@
     --accent1: #7c4dff;
 }
 
+
+.title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.title h1 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+
 .about_box {
     background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(245,247,250,0.9) 100%);
     border-radius: 16px;
@@ -21,39 +34,11 @@
 }
 
 
-section {
-    padding: 80px 0;
-}
-
-.section-title {
-    text-align: center;
-    margin-bottom: 60px;
-    position: relative;
-}
-
-.section-title h2 {
-    font-size: 2.5rem;
-    color: var(--dark);
-    display: inline-block;
-}
-
-.section-title h2::after {
-    content: '';
-    position: absolute;
-    width: 80px;
-    height: 4px;
-    background: linear-gradient(to right, var(--primary), var(--secondary));
-    bottom: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    border-radius: 2px;
-}
-
 .about-content {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 40px;
+    gap: 30px;
 }
 
 .about-text {
@@ -88,27 +73,6 @@ section {
     transform: scale(1.03);
 }
 
-
-
-
-
-.problems-header {
-    text-align: center;
-    margin-bottom: 50px;
-}
-
-.problems-header h1 {
-    font-size: 2.5rem;
-    color: var(--primary);
-    margin-bottom: 15px;
-}
-
-.problems-header p {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    max-width: 700px;
-    margin: 0 auto;
-}
 
 .problems-grid {
     display: grid;
@@ -152,7 +116,6 @@ section {
     margin-bottom: 0;
 }
 
-  /* Стили для идеи проекта */
         .idea-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -162,10 +125,10 @@ section {
         
         .idea-feature {
             background: white;
-            padding: 25px;
+            padding-left: 15px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--accent1);
         }
         
         .idea-feature h4 {
@@ -173,6 +136,140 @@ section {
             margin-bottom: 15px;
             font-size: 1.2rem;
         }
+      
 
 
+ .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
         
+        /* Двухколоночный макет */
+        .tech-demo-container {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .code-demo {
+            width: 60%;
+            background: #282c34;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .tech-accordion {
+            width: 40%;
+        }
+        
+        /* Стили для аккордеона технологий */
+        .tech-item {
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: white;
+        }
+        
+        .tech-header {
+            padding: 18px 25px;
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .tech-header:hover {
+            background: linear-gradient(135deg, #5e35b1, #78c3be);
+        }
+        
+        .tech-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        
+        .tech-header i {
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-item.active .tech-header i {
+            transform: rotate(180deg);
+        }
+        
+        .tech-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+        
+        .tech-item.active .tech-content {
+            max-height: 1000px;
+        }
+        
+        .tech-description {
+            padding: 20px;
+            background: white;
+        }
+        
+        /* Стили для демонстрации кода */
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #1e1e1e;
+            color: #9da5b4;
+        }
+        
+        .code-title {
+            font-weight: bold;
+        }
+        
+         
+        .code-content {
+            display: none;
+        }
+        
+        .code-content.active {
+            display: block;
+        }
+        
+        pre {
+            margin: 0;
+        }
+        
+        code {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        .hljs {
+            background: #282c34;
+            padding: 20px;
+        }
+
+         /* Стили для галереи технологий */
+        .tech-gallery {
+            display: flex;
+            overflow-x: auto;
+            padding: 15px;
+            gap: 15px;
+            background: #f8f9fa;
+        }
+        
+        .tech-gallery img {
+            height: 150px;
+            width: 48%;
+            border-radius: 6px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .tech-gallery img:hover {
+            transform: scale(1.05);
+        }
