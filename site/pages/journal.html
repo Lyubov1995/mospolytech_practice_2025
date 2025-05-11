@@ -1,293 +1,375 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Проблемное поле проекта</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600;800&family=Exo+2:wght@300;400&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Интерактивная диаграмма проблем</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <style>
-        :root {
-            --primary: #7B2CBF;
-            --secondary: #E9C46A;
-            --accent: #F94144;
-            --dark: #14213D;
-            --light: #F8F9FA;
-        }
-        
         body {
-            font-family: 'Exo 2', sans-serif;
+            font-family: 'Montserrat', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #0A0F1F;
-            color: var(--light);
-            overflow-x: hidden;
-            perspective: 1000px;
-        }
-        
-        .space-container {
-            min-height: 100vh;
+            background-color: #f5f7fa;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-            position: relative;
+            min-height: 100vh;
         }
         
-        .stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: 
-                radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 40px 70px, #fff, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 90px 40px, #fff, rgba(0,0,0,0));
-            background-size: 100px 100px;
-            animation: twinkle 5s infinite;
-        }
-        
-        @keyframes twinkle {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
-        
-        .title-container {
+        .header {
             text-align: center;
-            margin-bottom: 60px;
-            transform-style: preserve-3d;
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotateX(5deg); }
-            50% { transform: translateY(-20px) rotateX(5deg); }
+            padding: 40px 20px;
+            width: 100%;
         }
         
         h1 {
-            font-family: 'Kanit', sans-serif;
-            font-size: 3.5rem;
-            margin: 0;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-        }
-        
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150px;
-            height: 3px;
-            background: var(--accent);
-            border-radius: 3px;
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
         }
         
         .subtitle {
-            font-size: 1.3rem;
-            margin-top: 20px;
-            opacity: 0.8;
+            color: #4a5568;
+            font-size: 1.1rem;
             max-width: 700px;
-        }
-        
-        .problem-matrix {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 1000px;
             margin: 0 auto;
-            transform-style: preserve-3d;
         }
         
-        .problem-card {
-            background: rgba(20, 33, 61, 0.7);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(123, 44, 191, 0.3);
-            transform-style: preserve-3d;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
+        .diagram-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 20px auto;
+           
+        }
+        
+        .node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .node-circle {
+            transition: all 0.3s ease;
+        }
+        
+        .node:hover .node-circle {
+            filter: drop-shadow(0 0 8px rgba(110, 69, 226, 0.4));
+            transform: scale(1.05);
+        }
+        
+        .node-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            fill: #2d3748;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        
+        .link {
+            stroke: #cbd5e0;
+            stroke-width: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .central-circle {
+            fill: #6e45e2;
+            stroke: #fff;
+            stroke-width: 3;
+            filter: drop-shadow(0 0 10px rgba(110, 69, 226, 0.5));
+        }
+        
+        .central-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            fill: white;
+            text-anchor: middle;
+            pointer-events: none;
+        }
+        
+        .problem-detail {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            max-width: 300px;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            pointer-events: none;
+            z-index: 10;
             overflow: hidden;
         }
         
-        .problem-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(233, 196, 106, 0.1) 0%, transparent 70%);
-            transform: rotate(30deg);
-            transition: all 0.5s ease;
+        .problem-header {
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            color: white;
+            padding: 15px 20px;
+            margin: 0;
         }
         
-        .problem-card:hover {
-            transform: translateY(-10px) rotateX(5deg);
-            box-shadow: 0 15px 40px rgba(123, 44, 191, 0.4);
-            border-color: rgba(233, 196, 106, 0.5);
-        }
-        
-        .problem-card:hover::before {
-            transform: rotate(0);
-        }
-        
-        .problem-number {
-            font-family: 'Kanit', sans-serif;
-            font-size: 2rem;
-            font-weight: 800;
-            color: var(--secondary);
-            margin-bottom: 15px;
-            display: inline-block;
-            position: relative;
-        }
-        
-        .problem-number::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--accent);
-        }
-        
-        .problem-title {
-            font-family: 'Kanit', sans-serif;
-            font-size: 1.5rem;
-            margin: 15px 0;
-            color: var(--secondary);
-        }
-        
-        .problem-desc {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            opacity: 0.9;
+        .problem-content {
+            padding: 20px;
+            color: #4a5568;
+            line-height: 1.6;
         }
         
         .highlight {
-            color: var(--accent);
+            color: #6e45e2;
             font-weight: 600;
         }
         
-        .floating-orb {
+        .close-btn {
             position: absolute;
-            width: 300px;
-            height: 300px;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(123, 44, 191, 0.15) 0%, transparent 70%);
-            filter: blur(30px);
-            z-index: -1;
-            animation: orb-float 15s ease-in-out infinite;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s ease;
         }
         
-        .orb-1 {
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
         }
         
-        .orb-2 {
-            bottom: 15%;
-            right: 10%;
-            animation-delay: 3s;
-        }
-        
-        @keyframes orb-float {
-            0%, 100% { transform: translate(0, 0); }
-            25% { transform: translate(50px, 50px); }
-            50% { transform: translate(0, 100px); }
-            75% { transform: translate(-50px, 50px); }
+        .expanded {
+            transform: scale(1.3);
         }
         
         @media (max-width: 768px) {
-            .problem-matrix {
-                grid-template-columns: 1fr;
-            }
-            
             h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
             }
             
             .subtitle {
-                font-size: 1.1rem;
+                font-size: 1rem;
+            }
+            
+            .node-text {
+                font-size: 0.8rem;
+            }
+            
+            .problem-detail {
+                max-width: 250px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="space-container">
-        <div class="stars"></div>
-        <div class="floating-orb orb-1"></div>
-        <div class="floating-orb orb-2"></div>
+    <div class="header">
+        <h1>Интерактивная диаграмма проблем</h1>
+        <p class="subtitle">Нажмите на круги, чтобы раскрыть подробности каждой проблемы</p>
+    </div>
+    
+    <div class="diagram-container">
+        <svg id="diagram" width="100%" height="600"></svg>
         
-        <div class="title-container">
-            <h1>Проблемное поле</h1>
-            <p class="subtitle">Ключевые вызовы в создании цифровых идентичностей нового поколения</p>
+        <div class="problem-detail" id="problem1-detail">
+            <div class="problem-header">
+                <h3>Ограниченная персонализация</h3>
+                <button class="close-btn">×</button>
+            </div>
+            <div class="problem-content">
+                <p>Существующие решения предлагают <span class="highlight">шаблонные модели</span>, не позволяющие создать уникальный цифровой образ:</p>
+                <ul>
+                    <li>Ограниченный выбор стилей</li>
+                    <li>Невозможность тонкой настройки</li>
+                    <li>Отсутствие адаптации под индивидуальные особенности</li>
+                </ul>
+            </div>
         </div>
         
-        <div class="problem-matrix">
-            <!-- Проблема 1 -->
-            <div class="problem-card">
-                <div class="problem-number">01</div>
-                <h3 class="problem-title">КРИЗИС ПЕРСОНАЛИЗАЦИИ</h3>
-                <p class="problem-desc">Современные платформы предлагают <span class="highlight">ограниченный набор шаблонов</span>, превращая цифровые аватары в безликие клоны. Наши исследования показывают, что 78% пользователей не могут создать аватар, точно отражающий их уникальность.</p>
+        <div class="problem-detail" id="problem2-detail">
+            <div class="problem-header">
+                <h3>Высокий порог входа</h3>
+                <button class="close-btn">×</button>
             </div>
-            
-            <!-- Проблема 2 -->
-            <div class="problem-card">
-                <div class="problem-number">02</div>
-                <h3 class="problem-title">ТЕХНОЛОГИЧЕСКИЙ БАРЬЕР</h3>
-                <p class="problem-desc">Для создания качественных 3D-моделей требуются <span class="highlight">специализированные навыки</span> и дорогостоящее ПО. Это исключает 92% потенциальных пользователей, не имеющих опыта в 3D-моделировании.</p>
+            <div class="problem-content">
+                <p>Для создания качественных аватаров требуются:</p>
+                <ul>
+                    <li><span class="highlight">Специальные навыки</span> 3D-моделирования</li>
+                    <li>Дорогостоящее программное обеспечение</li>
+                    <li>Мощное компьютерное оборудование</li>
+                </ul>
+                <p>Это делает технологию недоступной для большинства пользователей.</p>
             </div>
-            
-            <!-- Проблема 3 -->
-            <div class="problem-card">
-                <div class="problem-number">03</div>
-                <h3 class="problem-title">ДИСБАЛАНС ВЫРАЗИТЕЛЬНОСТИ</h3>
-                <p class="problem-desc">Большинство решений жертвуют либо <span class="highlight">реализмом</span>, либо <span class="highlight">стилизацией</span>, не предлагая гибких настроек. В результате аватары выглядят либо неестественно, либо слишком карикатурно.</p>
+        </div>
+        
+        <div class="problem-detail" id="problem3-detail">
+            <div class="problem-header">
+                <h3>Невыразительность</h3>
+                <button class="close-btn">×</button>
             </div>
-            
-            <!-- Проблема 4 -->
-            <div class="problem-card">
-                <div class="problem-number">04</div>
-                <h3 class="problem-title">AI-ПРОПАСТЬ</h3>
-                <p class="problem-desc">Разрыв между <span class="highlight">потребностью</span> в AI-решениях и <span class="highlight">доступностью</span> технологий растёт. 85% малого бизнеса не могут внедрить ИИ из-за сложности интеграции и отсутствия экспертизы.</p>
+            <div class="problem-content">
+                <p>Аватары часто не передают важные аспекты личности:</p>
+                <ul>
+                    <li><span class="highlight">Эмоции</span> и мимику</li>
+                    <li>Особенности внешности</li>
+                    <li>Характерные жесты и позы</li>
+                </ul>
+                <p>Это снижает их ценность для социального взаимодействия.</p>
+            </div>
+        </div>
+        
+        <div class="problem-detail" id="problem4-detail">
+            <div class="problem-header">
+                <h3>AI-барьер</h3>
+                <button class="close-btn">×</button>
+            </div>
+            <div class="problem-content">
+                <p>Сложность внедрения технологий <span class="highlight">искусственного интеллекта</span>:</p>
+                <ul>
+                    <li>Требуется техническая экспертиза</li>
+                    <li>Высокая стоимость решений</li>
+                    <li>Сложность интеграции с существующими системами</li>
+                </ul>
+                <p>Это ограничивает возможности персонализации для обычных пользователей.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // Параллакс-эффект для карточек
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.problem-card');
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
+        document.addEventListener('DOMContentLoaded', function() {
+            const width = Math.min(900, window.innerWidth - 40);
+            const height = 600;
+            const center = { x: width / 2, y: height / 2 };
             
-            cards.forEach((card, index) => {
-                const rect = card.getBoundingClientRect();
-                const cardCenterX = rect.left + rect.width / 2;
-                const cardCenterY = rect.top + rect.height / 2;
-                
-                const moveX = (cardCenterX - e.clientX) / 50;
-                const moveY = (cardCenterY - e.clientY) / 50;
-                
-                card.style.transform = `
-                    translateY(-10px) 
-                    rotateX(${moveY * 0.5}deg) 
-                    rotateY(${-moveX * 0.5}deg)
-                `;
+            const problems = [
+                {
+                    id: "problem1",
+                    name: "Шаблонность",
+                    angle: Math.PI * 0.25,
+                    distance: 180,
+                    detail: "problem1-detail",
+                    color: "#88d3ce"
+                },
+                {
+                    id: "problem2",
+                    name: "Сложность",
+                    angle: Math.PI * 0.75,
+                    distance: 180,
+                    detail: "problem2-detail",
+                    color: "#ff9a76"
+                },
+                {
+                    id: "problem3",
+                    name: "Невыразительность",
+                    angle: Math.PI * 1.25,
+                    distance: 180,
+                    detail: "problem3-detail",
+                    color: "#a18cd1"
+                },
+                {
+                    id: "problem4",
+                    name: "AI-барьер",
+                    angle: Math.PI * 1.75,
+                    distance: 180,
+                    detail: "problem4-detail",
+                    color: "#84fab0"
+                }
+            ];
+            
+            const svg = d3.select("#diagram")
+                .attr("viewBox", `0 0 ${width} ${height}`)
+                .attr("preserveAspectRatio", "xMidYMid meet");
+            
+            // Создаем связи
+            problems.forEach(problem => {
+                svg.append("line")
+                    .attr("class", "link")
+                    .attr("x1", center.x)
+                    .attr("y1", center.y)
+                    .attr("x2", center.x + Math.cos(problem.angle) * problem.distance)
+                    .attr("y2", center.y + Math.sin(problem.angle) * problem.distance);
             });
+            
+            // Центральный круг
+            svg.append("circle")
+                .attr("class", "central-circle")
+                .attr("cx", center.x)
+                .attr("cy", center.y)
+                .attr("r", 80);
+                
+            svg.append("text")
+                .attr("class", "central-text")
+                .attr("x", center.x)
+                .attr("y", center.y + 8)
+                .text("Проблемы");
+            
+            // Создаем узлы проблем
+            problems.forEach(problem => {
+                const nodeGroup = svg.append("g")
+                    .attr("class", "node")
+                    .attr("id", problem.id)
+                    .attr("transform", `translate(${center.x + Math.cos(problem.angle) * problem.distance}, ${center.y + Math.sin(problem.angle) * problem.distance})`);
+                
+                nodeGroup.append("circle")
+                    .attr("class", "node-circle")
+                    .attr("r", 60)
+                    .attr("fill", problem.color);
+                
+                nodeGroup.append("text")
+                    .attr("class", "node-text")
+                    .attr("dy", 5)
+                    .text(problem.name);
+                
+                // Обработчики событий
+                nodeGroup.on("click", function() {
+                    // Закрываем все открытые детали
+                    document.querySelectorAll('.problem-detail').forEach(detail => {
+                        detail.style.opacity = "0";
+                        detail.style.pointerEvents = "none";
+                        detail.style.transform = "scale(0.9)";
+                    });
+                    
+                    // Убираем класс expanded у всех узлов
+                    svg.selectAll('.node-circle').classed('expanded', false);
+                    
+                    // Показываем выбранную деталь
+                    const detail = document.getElementById(problem.detail);
+                    detail.style.opacity = "1";
+                    detail.style.pointerEvents = "auto";
+                    detail.style.transform = "scale(1)";
+                    
+                    // Позиционируем деталь
+                    const xPos = center.x + Math.cos(problem.angle) * (problem.distance + 120);
+                    const yPos = center.y + Math.sin(problem.angle) * (problem.distance + 120);
+                    
+                    detail.style.left = `${xPos - 150}px`;
+                    detail.style.top = `${yPos - 100}px`;
+                    
+                    // Добавляем класс expanded к текущему узлу
+                    d3.select(this).select('.node-circle').classed('expanded', true);
+                });
+            });
+            
+            // Закрытие деталей по кнопке
+            document.querySelectorAll('.close-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const detail = this.closest('.problem-detail');
+                    detail.style.opacity = "0";
+                    detail.style.pointerEvents = "none";
+                    detail.style.transform = "scale(0.9)";
+                    
+                    // Убираем класс expanded у всех узлов
+                    svg.selectAll('.node-circle').classed('expanded', false);
+                });
+            });
+            
+            // Анимация при загрузке
+            svg.selectAll(".link")
+                .attr("stroke-dasharray", function() { return this.getTotalLength() + " " + this.getTotalLength(); })
+                .attr("stroke-dashoffset", function() { return this.getTotalLength(); })
+                .transition()
+                .duration(1000)
+                .attr("stroke-dashoffset", 0);
         });
     </script>
 </body>

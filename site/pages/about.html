@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/about.js"></script>
 </head>
@@ -111,31 +113,78 @@
                 </div>
             </div>
         </div>
-
-    <div class="title">
-            <h1>Проблематика проекта</h1>
+ <div class="title">
+        <h1>Проблематика проекта</h1>
+        <p class="subtitle">Нажмите на круги, чтобы раскрыть подробности каждой проблемы</p>
+    </div>
+    
+    <div class="diagram-container">
+        <svg id="diagram" width="100%" height="600"></svg>
+        
+        <div class="problem-detail" id="problem1-detail">
+            <div class="problem-header">
+                <h3>Ограниченная персонализация</h3>
+                <button class="close-btn">×</button>
+            </div>
+            <div class="problem-content">
+                <p>Существующие решения предлагают <span class="highlight">шаблонные модели</span>, не позволяющие создать уникальный цифровой образ:</p>
+                <ul>
+                    <li>Ограниченный выбор стилей</li>
+                    <li>Невозможность тонкой настройки</li>
+                    <li>Отсутствие адаптации под индивидуальные особенности</li>
+                </ul>
+            </div>
         </div>
         
-        <div class="problems-grid">
-            <div class="problem-card">
-                <h2>Ограниченные возможности персонализации</h2>
-                <p>Существующие решения зачастую предлагают либо стилизованные модели, либо требуют сложных инструментов для создания реалистичных 3D-аватаров.</p>
+        <div class="problem-detail" id="problem2-detail">
+            <div class="problem-header">
+                <h3>Высокий порог входа</h3>
+                <button class="close-btn">×</button>
             </div>
-            <div class="problem-card">
-                <h2>Высокий порог входа</h2>
-                <p>Начинающим предпринимателям и студентам сложно запустить бизнес в сфере VR и 3D-моделирования из-за нехватки знаний, технологий и инвестиций.</p>
-            </div>
-            <div class="problem-card">
-                <h2>Недостаточная выразительность</h2>
-                <p>Многим людям не хватает инструментов для создания 3D-аватаров, которые соответствуют их реальному внешнему виду или воображаемому образу.</p>
-            </div>
-            
-            <div class="problem-card">
-                <h2>Рост потребности в AI-компетенциях</h2>
-                <p>Навыки работы с искусственным интеллектом крайне востребованы на рынке, однако их освоение требует значительных ресурсов.</p>
+            <div class="problem-content">
+                <p>Для создания качественных аватаров требуются:</p>
+                <ul>
+                    <li><span class="highlight">Специальные навыки</span> 3D-моделирования</li>
+                    <li>Дорогостоящее программное обеспечение</li>
+                    <li>Мощное компьютерное оборудование</li>
+                </ul>
+                <p>Это делает технологию недоступной для большинства пользователей.</p>
             </div>
         </div>
-
+        
+        <div class="problem-detail" id="problem3-detail">
+            <div class="problem-header">
+                <h3>Невыразительность</h3>
+                <button class="close-btn">×</button>
+            </div>
+            <div class="problem-content">
+                <p>Аватары часто не передают важные аспекты личности:</p>
+                <ul>
+                    <li><span class="highlight">Эмоции</span> и мимику</li>
+                    <li>Особенности внешности</li>
+                    <li>Характерные жесты и позы</li>
+                </ul>
+                <p>Это снижает их ценность для социального взаимодействия.</p>
+            </div>
+        </div>
+        
+        <div class="problem-detail" id="problem4-detail">
+            <div class="problem-header">
+                <h3>AI-барьер</h3>
+                <button class="close-btn">×</button>
+            </div>
+            <div class="problem-content">
+                <p>Сложность внедрения технологий <span class="highlight">искусственного интеллекта</span>:</p>
+                <ul>
+                    <li>Требуется техническая экспертиза</li>
+                    <li>Высокая стоимость решений</li>
+                    <li>Сложность интеграции с существующими системами</li>
+                </ul>
+                <p>Это ограничивает возможности персонализации для обычных пользователей.</p>
+            </div>
+        </div>
+    </div>
+    
         <div class="title">
             <h1>Технологии проекта</h1>
         </div>
