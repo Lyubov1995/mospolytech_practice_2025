@@ -91,9 +91,9 @@
                         <h4>Тренд на виртуальные миры</h4>
                         <p>После пандемии спрос на виртуальные встречи, онлайн-игры и метавселенные сильно вырос. VR-пространства становятся новым способом общения, и качественный аватар — это необходимость.</p>
                     </div>
-                    
+       
                     <div class="idea-feature">
-                        <h4>Персонализация = Успех</h4>
+                        <h4>Персонализация = успех</h4>
                         <p>Люди хотят выделяться и выражать себя в цифровом мире. Большинство VR-игр и платформ предлагают стандартные аватары, а мы дадим полную свободу кастомизации.</p>
                     </div>
                     
@@ -200,34 +200,36 @@
                 <!-- Контент для Hunyuan -->
                 <div class="code-content active" data-tech="hunyuan">
                     <pre><code class="language-python"># Генерация описания аватара с Hunyuan API
-import requests
+import { Client } from "@gradio/client";
 
-def generate_avatar_description(prompt):
-    url = "https://api.hunyuan.ai/v1/chat/completions"
-    headers = {
-        "Authorization": "Bearer YOUR_API_KEY",
-        "Content-Type": "application/json"
-    }
-    data = {
-        "model": "hunyuan",
-        "messages": [{
-            "role": "user",
-            "content": f"Опиши подробно 3D аватар: {prompt}"
-        }],
-        "temperature": 0.7
-    }
-    
-    response = requests.post(url, json=data, headers=headers)
-    if response.status_code == 200:
-        return response.json()["choices"][0]["message"]["content"]
-    else:
-        raise Exception(f"Ошибка API: {response.text}")
+const response_0 = await fetch("https://raw.githubusercontent.com/gradio-app/gradio/main/test/test_files/bus.png");
+const exampleImage = await response_0.blob();			
+const response_1 = await fetch("https://raw.githubusercontent.com/gradio-app/gradio/main/test/test_files/bus.png");
+const exampleImage = await response_1.blob();					
+const response_2 = await fetch("https://raw.githubusercontent.com/gradio-app/gradio/main/test/test_files/bus.png");
+const exampleImage = await response_2.blob();					
+const response_3 = await fetch("https://raw.githubusercontent.com/gradio-app/gradio/main/test/test_files/bus.png");
+const exampleImage = await response_3.blob();					
+const response_4 = await fetch("https://raw.githubusercontent.com/gradio-app/gradio/main/test/test_files/bus.png");
+const exampleImage = await response_4.blob();					
+const client = await Client.connect("tencent/Hunyuan3D-2");
+const result = await client.predict("/shape_generation", { 		
+		caption: "Hello!!", 
+				image: exampleImage, 
+				mv_image_front: exampleImage, 
+				mv_image_back: exampleImage, 
+				mv_image_left: exampleImage, 
+				mv_image_right: exampleImage, 		
+		steps: 1, 		
+		guidance_scale: 3, 		
+		seed: 0, 		
+		octree_resolution: 16, 		
+		check_box_rembg: true, 		
+		num_chunks: 1000, 		
+		randomize_seed: true, 
+});
 
-# Использование
-description = generate_avatar_description(
-    "Киберпанк персонаж с механической рукой и голографическими глазами"
-)
-print(description)</code></pre>
+console.log(result.data);</code></pre>
                 </div>
                 
                 <!-- Контент для Node.js -->
@@ -459,21 +461,90 @@ print(response)</code></pre>
                         </div>
                          <div class="tech-gallery">
                                     <img src="../images/gpt.jpg">
-                                      <img src="../images/c4.png" >
+                                    <img src="../images/c4.png" >
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+<div class="title">
+            <h1>Этапы реализации</h1>
+        </div>
+    <div class="section">
 
- 
+            <p style="text-align: center;">Проект реализуется с <span class="highlight">12 февраля по 21 мая</span> и включает четыре ключевых этапа:</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                
+                <div class="timeline-items">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-date">12 фев - 4 мар</span>
+                            <h3>Исследование</h3>
+                            <ul>
+                                <li>Анализ существующих решений и технологий</li>
+                                <li>Изучение требований VR-платформ и игровых движков</li>
+                                <li>Определение целевой аудитории и ключевых потребностей</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-date">5 мар - 25 мар</span>
+                            <h3>Прототипирование</h3>
+                            <ul>
+                                <li>Разработка первой версии интерфейса</li>
+                                <li>Тестирование моделей и анимаций</li>
+                                <li>Сбор обратной связи от первых пользователей</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-date">26 мар - 15 апр</span>
+                            <h3>Тестирование и доработка</h3>
+                            <ul>
+                                <li>Улучшение модели генерации аватаров</li>
+                                <li>Тесты совместимости с VR-платформами</li>
+                                <li>Разработка бизнес-модели и стратегии монетизации</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <span class="timeline-date">16 апр - 21 мая</span>
+                            <h3>Запуск и масштабирование</h3>
+                            <ul>
+                                <li>Презентация проекта инвесторам</li>
+                                <li>Поиск партнёров и грантов</li>
+                                <li>Развитие маркетинговой стратегии</li>
+                                <li>Подготовка к коммерческому запуску</li>
+                            </ul>
+                        </div>
+                        <div class="timeline-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="title">
+            <h1>Работа проекта</h1>
+        </div>
+        <video width="70%" height="10%" controls class="video">
+        <source src="../video/work.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+        </video>
+        <div></div>
 </div>
-
-
-
-
-    
+  
     <footer class="site-footer">
         <div class="footer-wave">
             <svg viewBox="0 0 1200 120" preserveAspectRatio="none">

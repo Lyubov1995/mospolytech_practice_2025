@@ -154,7 +154,7 @@
                 
                 nodeGroup.append("circle")
                     .attr("class", "node-circle")
-                    .attr("r", 60)
+                    .attr("r", 70)
                     .attr("fill", problem.color);
                 
                 nodeGroup.append("text")
