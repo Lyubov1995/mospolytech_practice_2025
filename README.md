@@ -15,4 +15,4 @@
 </table>
 <h2>Задание</h2>
     
-Задание размещено в папке task в файле [README.md]([https://www.example.com](https://github.com/Lyubov1995/mospolytech_practice_2025/tree/main/task/))
+Задание размещено в папке task в файле [README.md](https://github.com/Lyubov1995/mospolytech_practice_2025/tree/main/task/)
