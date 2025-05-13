@@ -14,4 +14,4 @@
         <td>Автоматизированные системы обработки информации и управления</td>
 </table>
 <h2>Задание<h2>
-<p>Задание размещено в папке task в файле <https://github.com/Lyubov1995/mospolytech_practice_2025/edit/main/README.md></p>p
+<p>Задание размещено в папке task в файле </p>
