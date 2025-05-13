@@ -16,3 +16,7 @@
 <h2>Задание</h2>
     
 Задание размещено в папке task в файле [README.md](https://github.com/Lyubov1995/mospolytech_practice_2025/tree/main/task/)
+
+<h2>Вариативная часть задания</h2>
+    
+Создание собственноо блокировщика рекламы для браузера на JavaScript
