@@ -1,19 +1,23 @@
 <!DOCTYPE html>  
 <html>
 <head>
-	<title>Главная</title>
-    <link rel="icon" href="../images/icon.png"  type="image/png">
+    <title>Участники</title>
+    <link rel="icon" href="../images/icon.png" type="image/png">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
+        <link rel="stylesheet" type="text/css" href="../css/members.css">
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/noto-serif-condensed" type="text/css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="../js/script.js"></script>
+  <script src="../js/members.js"></script>
 </head>
 <body>
     <header>     
-        <div class="parallax-bg">    </div>
+        <div class="parallax-bg"></div>
         <div class="header-container">
-         <a  class="header-logo">AVATAR3D</a>
+            <a class="header-logo">MetaMorph</a>
             <nav class="nav-menu">
-                <a href="index.html" >Главная</a>
+                <a href="index.html">Главная</a>
                 <a href="about.html">О проекте</a>
                 <a href="members.html" class="active">Участники</a>
                 <a href="journal.html">Журнал</a>
@@ -22,8 +26,161 @@
         </div>
     </header>
 
+<div class="container">
+        <div class="slider-wrapper">
+            <button class="slider-btn prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+             <h1 style="margin-top: 150px;">Наша команда</h1>
+        <div class="slider-container" id="teamSlider">
+            <div class="team-slider">
+                <!-- Участник 1 -->
+                <div class="member-card">
+                    <div class="member-header">
+                            <img class="member-avatar" src="../images/lid.jpeg" ></img>
+                        <h2 class="member-name">Сергеев Илья Артемович</h2>
+                        <div class="member-role">Team Lead</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list">
+                            <li>Координация работы команды и распределение задач</li>
+                            <li>Оформление презентаций и отчетов</li>
+                            <li>Оформление спринтов на наделю</li>  
+                            <li>Подготовка визуальных материалов для презентаций</li>
+                            <li>Презентация проекта</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Участник 2 -->
+                <div class="member-card">
+                    <div class="member-header">
+                        <img class="member-avatar" src="../images/me.jpg" ></img>
+                        <h2 class="member-name">Голданова Любовь Владимировна</h2>
+                        <div class="member-role">Backend-разработчик</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list">      
+                            <li>Разработка серверной части приложения</li>
+                            <li>Интеграция языковой модели Hunyuan в проект</li>
+                            <li>Настройка API и Unity</li>
+                            <li>Создание и текстурирование 3D-моделей аватаров</li>
+                            <li>Объединение Backend и Frontend</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Участник 3 -->
+                <div class="member-card">
+                    <div class="member-header">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <h2 class="member-name">Троценко Иван Алексеевич</h2>
+                        <div class="member-role">Frontend-разработчик</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list">
+                            <li>Оптимизация моделей для VR-платформ</li>    
+                            <li>Создание дизайна интерфейса</li>
+                            <li>Разработка алгоритмов генерации аватаров с использованием ИИ</li>
+                            <li>Разработка пользовательского интерфейса</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Участник 4 -->
+                <div class="member-card">
+                    <div class="member-header">
+                    <img class="member-avatar" src="../images/mila.png" ></img>
+                        <h2 class="member-name">Шевчук Милана Александровна</h2>
+                        <div class="member-role">Бизнес-аналитик</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list">
+                            <li>Разработка дорожной карты</li>
+                            <li>Техническое исследование</li>
+                            <li>Расчёт себестоимости / прибыли</li>
+                            <li>Описание функционала проекта</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Участник 5 -->
+                <div class="member-card">
+                    <div class="member-header">
+                         <img class="member-avatar" src="../images/karo.png" ></img>
+                        <h2 class="member-name">Орлова Анна Александровна</h2>
+                        <div class="member-role">Бизнес-аналитик</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list">
+                            <li>Разработка дорожной карты</li>
+                            <li>Анализ рынка и конкурентов</li>
+                            <li>Разработка бизнес-модели и стратегии монетизации</li>
+                            <li>Исследование целевой аудитории</li>      
+                            <li>Планирование масштабирования</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Участник 6 -->
+                <div class="member-card">
+                    <div class="member-header">
+                        <img class="member-avatar" src="../images/dasha.png" ></img>
+                        <h2 class="member-name">Минеева Дарья Алексеевна </h2>
+                        <div class="member-role">Тестировщик / Бизнес-аналитик</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list">
+                            <li>Разработка дорожной карты</li>
+                            <li>Исследование целевой аудитории</li>
+                            <li>Разработка кобрендинговых инициатив / интеграций </li>
+                            <li>Планирование маркетинговой стратегии</li>
+                             <li>Тестирование исследуемых технологий</li>
+                        </ul>
+                    </div>
+                </div>
 
+                <!-- Участник 7 -->
+                <div class="member-card">
+                    <div class="member-header">
+                         <img class="member-avatar" src="../images/e.png" ></img>
+                        <h2 class="member-name">Колеснин Евгений Михайлович </h2>
+                              <div class="member-role">.</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list">
+                            <li>Исследование ML модуля обработки изображений</li>
+                            <li>Исследование Roblox, VRChat, Horizon Worlds</li>
+                        </ul>
+                    </div>
+                </div>
 
+                <!-- Участник 8 -->
+                <div class="member-card">
+                    <div class="member-header">
+                          <img class="member-avatar" src="../images/v.png" ></img>
+                        <h2 class="member-name">Мовчан Сергей Антонович </h2>
+                         <div class="member-role">Аналитик</div>
+                    </div>
+                    <div class="member-body">
+                        <h3 class="contribution-title">Основной вклад</h3>
+                        <ul class="contribution-list"> 
+                            <li>Расчёт себестоимости / прибыли</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <button class="slider-btn next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <div class="footer-wave">
@@ -34,6 +191,5 @@
             </svg>
         </div>
     </footer>
-
 </body>
 </html>

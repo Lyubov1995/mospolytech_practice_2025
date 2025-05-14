@@ -1,0 +1,187 @@
+ :root {
+            --primary: #6e45e2;
+            --secondary: #88d3ce;
+            --accent: #ff6b6b;
+            --light: #f7fafc;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--light);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+          
+        /*Cлайдер */
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .slider-container {
+            width: 100%;
+            overflow-x: auto;
+            padding: 30px 0;
+            scroll-behavior: smooth;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+     
+        .team-slider {
+            display: inline-flex;
+            gap: 30px;
+            padding: 0 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .member-card {
+            flex: 0 0 350px;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        /* Кнопки навигации */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        
+        .slider-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .slider-btn.prev {
+            left: -25px;
+        }
+        
+        .slider-btn.next {
+            right: -25px;
+        }
+        
+        .slider-btn i {
+            pointer-events: none;
+        }
+        
+        .member-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 25px;
+            color: white;
+            text-align: center;
+        }
+        
+        .member-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin: 0 auto 15px;
+            object-fit: cover;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--dark);
+        }
+        
+        .member-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            margin: 10px 0 5px;
+        }
+        
+        .member-role {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        
+        .member-body {
+            padding: 25px;
+        }
+        
+        .contribution-title {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .contribution-list {
+            padding-left: 20px;
+        }
+        
+        .contribution-list li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .contribution-list li:before {
+            content: '•';
+            color: var(--primary);
+            font-weight: bold;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        
+        @media (max-width: 768px) {
+            .member-card {
+                flex: 0 0 300px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .slider-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .slider-btn.prev {
+                left: -15px;
+            }
+            
+            .slider-btn.next {
+                right: -15px;
+            }
+        }
