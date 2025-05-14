@@ -1,12 +1,12 @@
 :root {
             --success: #4cc9f0;
         }
-        
+
         .container {
             max-width: 900px;
             margin: 40px auto;
             padding: 0 20px;
-            margin-top: 15%;
+            margin-top: 5%;
         }
         
         h1 {

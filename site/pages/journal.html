@@ -5,7 +5,6 @@
     <link rel="icon" href="../images/icon.png"  type="image/png">
     <link rel="stylesheet" type="text/css" href="../css/style.css">
         <link rel="stylesheet" type="text/css" href="../css/journal.css">
-    <link rel="stylesheet" type="text/css" href="../css/annotation.css">
     <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/noto-serif-condensed" type="text/css"/>
     <script src="../js/script.js"></script>
 </head>
@@ -23,25 +22,31 @@
             </nav>
         </div>
     </header>
-   
+   <div  style="margin-top: 150px; text-align: center;">
+                <h1 style=" color: aliceblue;">Этапы выполнения проекта</h1>
+    </div>
     <div class="container">
-        <!-- <header>
-            <h1>Журнал прогресса</h1>
-            <p class="subtitle">Последние обновления и достижения в нашем проекте</p>
-        </header> -->
-        
-        <div class="timeline">
-            <div class="post">
-                <span class="post-date">18 февраля 2025</span>
+ <div class="timeline">
+        <div class="post">
+                <span class="post-date">18-25 февраля 2025</span>
                 <h3 class="post-title">Старт проекта</h3>
                 <div class="post-content">
-                    <p>Сегодня мы официально начали работу над проектом. Провели брифинг с командой, определили основные цели и разделили задачи. Главный фокус первой недели — провести техническое исследование</p>
-                    <!-- <p>Уже настроили рабочее окружение и подготовили репозиторий на GitHub.</p> -->
+                    <p>Сегодня мы официально начали работу над проектом. Провели брифинг с командой, определили основные цели и разделили задачи. Главный фокус первой недели:</p>
+                    <ul>
+                        <li>Определение целевой аудитории </li>
+                        <li>Анализ конкурентов</li>
+                        <li>Продумывание уникального функционала приложения</li>
+                        <li>Формулирование маркетинговой стратегии, ценовой политики и стратегии масштабирования</li>
+                    </ul>
                 </div>
                 <div class="post-footer">
                     <div class="post-author">
-                        <div class="author-avatar">ИП</div>
-                        <span class="author-name">Иван Петров</span>
+                        <div class="author-avatar">ИА</div>
+                        <span class="author-name">Сергеев И.А.</span>
+                        <div class="author-avatar">АА</div>
+                        <span class="author-name">Орлова А.А.</span>
+                        <div class="author-avatar">ДА</div>
+                        <span class="author-name">Минеева Д.А.</span>
                     </div>
                     <div class="post-tags">
                         <span class="tag">старт</span>
@@ -50,37 +55,112 @@
                     </div>
                 </div>
             </div>
-             <div class="post">
-                <span class="post-date">11 марта 2025</span>
-                <h3 class="post-title">Начало разработки приложения</h3>
+       
+            <div class="post">
+                <span class="post-date">25 февраля - 4 марта 2025</span>
+                <h3 class="post-title">Определение технологий</h3>
                 <div class="post-content">
-                    <p>Завершили работу над основными компонентами интерфейса. Реализовали систему аутентификации и базовый API. Теперь пользователи могут регистрироваться и создавать свои профили.</p>
-                    <p>Обнаружили несколько проблем с производительностью при загрузке больших данных — это будет основным фокусом на следующей неделе.</p>
+                    <p>Главный фокус второй недели — анализ технологий и подготовка архитектуры</p>
+                    <p>Этап 1: Исследование и тестирование моделей генерации 3D-аватаров:</p>
+                    <ul>
+                            <li>Hunyuan (Tencent AI) – оценка качества и производительности. </li>
+                            <li>Trellis – анализ риггинга и текстурирования.</li>
+                            <li>Альтернативные решения (DeepMotion, Avatarify, Instant NeRF).</li>
+                        </ul>
+                    <p>Этап 2: Определение стеков</p>
+                        <ul>
+                            <li>Backend: Python (FastAPI) или Node.js (Express) для API.</li>
+                            <li>Frontend: Blazor (C#). Three.js (JS), Babylon.js (JS) –  3D в браузере. Unreal Engine / Unity – приложение вместо сайта.</li>
+                        </ul>
+                    <p>Технологии, выбранные в результате проведенного исследования:</p>
+                        <ul>
+                            <li>Нейросеть - Hunyuan (Tencent AI)</li>
+                            <li>Backend - Node.js (Express)</li>
+                            <li>Frontend - Unity</li>
+                        </ul>
                 </div>
                 <div class="post-footer">
                     <div class="post-author">
-                        <div class="author-avatar">АС</div>
-                        <span class="author-name">Анна Сидорова</span>
+                        <div class="author-avatar">ЛВ</div>
+                        <span class="author-name">Голданова Л.В.</span>
+                         <div class="author-avatar">ИА</div>
+                        <span class="author-name">Троценко И.А.</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">анализ</span>
+                        <span class="tag">исследование</span>
+                    </div>
+                </div>
+            </div>
+             <div class="post">
+                <span class="post-date">5-25 марта 2025</span>
+                <h3 class="post-title">Начало разработки приложения</h3>
+                <div class="post-content">
+                    <p>Началась разработка первой версии интерфейса приложения. В результате работы:</p>
+                    <p>Техническая группа:</p>
+                    <ul>
+                            <li>Создала базовую структуру (ПО)</li>
+                            <li>Провела анализ базового функционала и способов его внедрения</li>
+                            <li>Продумала API</li>
+                        </ul>
+                    <p>Бизнес-группа:</p>
+                    <ul>
+                            <li>Определила требования к модели (разрешение, скорость, точность).</li>
+                            <li>Сделала SWOT-анализ</li>
+                            <li>Подготовила первую демонстрацию наработок</li>
+                        </ul>
+                </div>
+                <div class="post-footer">
+                    <div class="post-author">
+                        <span class="author-name">Все члены команды</span>
                     </div>
                     <div class="post-tags">
                         <span class="tag">разработка</span>
-                        <span class="tag">API</span>
-                        <span class="tag">UI</span>
+                        <span class="tag">API/UI</span>
+                        <span class="tag">SWOT-анализ</span>
                     </div>
                 </div>
             </div>
 
             <div class="post">
-                <span class="post-date">11 марта 2025</span>
+                <span class="post-date">26 марта 2025</span>
                 <h3 class="post-title">Первый работающий прототип</h3>
                 <div class="post-content">
-                    <p>Завершили работу над основными компонентами интерфейса. Реализовали систему аутентификации и базовый API. Теперь пользователи могут регистрироваться и создавать свои профили.</p>
-                    <p>Обнаружили несколько проблем с производительностью при загрузке больших данных — это будет основным фокусом на следующей неделе.</p>
+                    <p>Завершили работу над основными компонентами интерфейса. Реализовали базовый API. Теперь пользователи могут загружать изображения и отправлять их на генерацию 3д модели </p>
+                    <p>Обнаружили несколько проблем: </p>
+                     <ul>
+                            <li>Долгая генерация модели</li>
+                            <li>Генерация модели не в том формате</li>
+                            <li>Невозможность отправки модели на сервер</li>
+                        </ul>
+                          <p>Это будет основным фокусом на следующей неделе.</p>
                 </div>
                 <div class="post-footer">
                     <div class="post-author">
-                        <div class="author-avatar">АС</div>
-                        <span class="author-name">Анна Сидорова</span>
+                       <div class="author-avatar">ЛВ</div>
+                        <span class="author-name">Голданова Л.В.</span>
+                         <div class="author-avatar">ИА</div>
+                        <span class="author-name">Троценко И.А.</span>
+                    </div>
+                    <div class="post-tags">
+                        <span class="tag">разработка</span>
+                        <span class="tag">API</span>
+                        <span class="tag">Hunyuan</span>
+                    </div>
+                </div>
+            </div>
+             <div class="post">
+                <span class="post-date">2-15 арпреля 2025</span>
+                <h3 class="post-title">Тестирование и доработка</h3>
+                <div class="post-content">
+                    <p>Завершили работу над основными компонентами интерфейса. Исправили проблемы, возникшие на прошлом этапе. Улучшили дизайн интерфейса</p>
+                </div>
+                <div class="post-footer">
+                    <div class="post-author">
+                       <div class="author-avatar">ЛВ</div>
+                        <span class="author-name">Голданова Л.В.</span>
+                         <div class="author-avatar">ИА</div>
+                        <span class="author-name">Троценко И.А.</span>
                     </div>
                     <div class="post-tags">
                         <span class="tag">разработка</span>
@@ -89,27 +169,16 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="post">
-                <span class="post-date">29 мая 2024</span>
-                <h3 class="post-title">Оптимизация и тестирование</h3>
-                <div class="post-content">
-                    <p>Провели серию нагрузочных тестов и значительно улучшили производительность системы. Оптимизировали запросы к базе данных и реализовали кэширование.</p>
-                    <p>Команда дизайнеров завершила работу над мобильной версией приложения. Осталось протестировать на различных устройствах.</p>
-                </div>
-                <div class="post-footer">
-                    <div class="post-author">
-                        <div class="author-avatar">МК</div>
-                        <span class="author-name">Максим Козлов</span>
-                    </div>
-                    <div class="post-tags">
-                        <span class="tag">оптимизация</span>
-                        <span class="tag">тестирование</span>
-                        <span class="tag">дизайн</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
+        <footer class="site-footer">
+        <div class="footer-wave">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#6e44ff"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#6e44ff"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#6e44ff"></path>
+            </svg>
+        </div>
+    </footer>
 </body>
 </html>
