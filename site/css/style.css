@@ -47,7 +47,6 @@ header {
     font-family: 'Orbitron', sans-serif;
     background-color: var(--dark);
     color: white;
-    overflow-x: hidden;
     height: 130px;
     overflow: hidden;
     position: fixed;
@@ -189,31 +188,6 @@ header {
     flex-direction: column;
     justify-content: center;
 }
-
-/* h1 {
-    font-size: 2.5rem;
-    color: #333;
-    margin-bottom: 30px;
-    font-weight: 600;
-}
-
-p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #555;
-    margin-bottom: 30px;
-}
-
-.benefit {
-    margin-bottom: 40px;
-}
-
-.benefit h2 {
-    font-size: 1.5rem;
-    color: #222;
-    margin-bottom: 15px;
-    font-weight: 600;
-} */
 
   /* Подвал */
   .site-footer {
