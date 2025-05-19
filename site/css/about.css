@@ -1,7 +1,6 @@
 :root {
     --primary: #6e45e2;
     --secondary: #88d3ce;
-    --dark: #1a1a2e;
     --light: #f8f9fa;
     --accent: #ff6b6b;
     --primary1: #5e35b1;
@@ -428,8 +427,6 @@
         }
         
         .timeline-content h3 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--dark);
             margin-top: 0;
             font-size: 1.3rem;
         }

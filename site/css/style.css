@@ -11,6 +11,7 @@ body {
     linear-gradient(135deg, #121a2e 0%, #2a1f40 100%);
     position: relative;
     background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Фон */
@@ -44,7 +45,6 @@ body {
 
  
 header {
-    font-family: 'Orbitron', sans-serif;
     background-color: var(--dark);
     color: white;
     height: 130px;
