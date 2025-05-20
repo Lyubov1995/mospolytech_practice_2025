@@ -30,26 +30,44 @@
 
   manifest.json – единственный необходимый файл, который нужен расширению. Он будет содержать метаданные о расширении, разрешения, необходимые для работы, и скрипт, который он должен запустить в фоновом режиме. Вот как это выглядит:
 {
-      "manifest_version": 2,
-      "name": "LinkedIn AdBlocker",
-      "description": "Blocking ads.",
-      "version": "0.0.1",
-      "author": "<AUTHOR_NAME>",
-      "browser_action": {
-          "default_title": "LinkedIn AdBlocker"
-      },
-      "permissions": [
-          "tabs",
-          "webNavigation",
-          "https://www.linkedin.com/"
-      ],
-      "background": {
-          "scripts": [
-              "extension.js"
-          ]
-      }
-  }
 
+   `"manifest\_version": 2,
+
+   `"name": "LinkedIn AdBlocker",
+
+  `"description": "Blocking ads.",
+
+  `"version": "0.0.1",
+
+  `"author": "<AUTHOR\_NAME>",
+
+    `"browser\_action": {
+
+   `"default\_title": "LinkedIn AdBlocker"
+
+  `},
+
+  `"permissions": [
+
+           `"tabs",
+
+            `"webNavigation",
+
+            `"https://www.linkedin.com/"
+
+        `],
+
+        `"background": {
+
+            `"scripts": [
+
+                `"extension.js"
+
+           `]
+
+        `}
+
+    `}
   Помимо метаданных, манифест настраивает разрешения. *Permissions* определяет, что разрешено делать расширению, например, получать URL-адрес текущей страницы или добавлять JavaScript на веб-сайт. Когда публикуется расширение где-либо, например, в Chrome Web Store, браузер предложит обосновать каждое запрашиваемое разрешение, чтобы обеспечить безопасность и конфиденциальность пользователей.
 
   Здесь же запрашивается разрешения для tabs и webNavigation для того, чтобы знать, когда посещается новый веб-сайт, а также что это за веб-сайт. 
