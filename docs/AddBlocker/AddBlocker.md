@@ -235,231 +235,127 @@
    Вы можете написать html – код, который задаст внешний вид блокировщика, а также выбрать ему иконку, которая будет отображаться в браузере.
 
    Пример html-кода
-  ` `<!DOCTYPE html>
-   <html lang="ru">
-   <head>
-     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>AdBlocker</title>
-     <style>
-       `body {
 
-         `width: 300px;
-
-         `padding: 15px;
-
-         `font-family: Arial, sans-serif;
-
-        `margin: 0;
-
-       `}
-
-       .status {
-
-         `display: flex;
-
-        `align-items: center;
-
-         `margin-bottom: 15px;
-
-         `justify-content: space-between;
-
-       `}
-
-     `  .switch {
-
-         `position: relative;
-
-         `display: inline-block;
-
-         `width: 50px;
-
-         `height: 24px;
-
-       `}
-
-    `   .switch input {
-
-         `opacity: 0;
-
-         `width: 0;
-
-         `height: 0;
-
-       `}
-
-     `  .slider {
-
-         `position: absolute;
-
-         `cursor: pointer;
-
-         `top: 0;
-
-         `left: 0;
-
-         `right: 0;
-
-         `bottom: 0;
-
-         `background-color: #ccc;
-
-         `transition: .4s;
-
-         `border-radius: 24px;
-
-       `}
-
-   `    .slider:before {
-
-         `position: absolute;
-
-         `content: "";
-
-         `height: 16px;
-
-         `width: 16px;
-
-         `left: 4px;
-
-         `bottom: 4px;
-
-         `background-color: white;
-
-         `transition: .4s;
-
-         `border-radius: 50%;
-
-       `}
-
-       `input:checked + .slider {
-
-         `background-color: #4CAF50;
-
-       `}
-
-       `input:checked + .slider:before {
-
-         `transform: translateX(26px);
-
-       `}
-
-       .stats {
-
-         `display: grid;
-
-         `grid-template-columns: 1fr 1fr;
-
-         `gap: 10px;
-
-         `margin-bottom: 15px;
-
-       `}
-
-   `    .stat {
-
-         `background: #f0f0f0;
-
-         `padding: 10px;
-
-         `border-radius: 5px;
-
-         `text-align: center;
-
-       `}
-
-   `    .stat-value {
-
-         `font-size: 18px;
-
-         `font-weight: bold;
-
-         `color: #4CAF50;
-
-       `}
-
-   `    .blocked-list {
-
-         `max-height: 200px;
-
-         `overflow-y: auto;
-
-         `border: 1px solid #eee;
-
-         `border-radius: 5px;
-
-         `padding: 10px;
-
-       `}
-
-   `    .blocked-item {
-
-         `padding: 5px 0;
-
-         `border-bottom: 1px solid #f0f0f0;
-
-         `font-size: 12px;
-
-       `}
-
-   `    .blocked-item:last-child {
-
-         `border-bottom: none;
-
-       `}
-
-     `</style>
-
-   `</head>
-
-   `<body>
-
-     `<div class="status">
-
-       `<h3 style="margin: 0;">AdBlocker</h3>
-
-       `<label class="switch">
-
-         `<input type="checkbox" id="toggle" checked>
-
-         `<span class="slider"></span>
-
-       `</label>
-
-     `</div>
-
-     `<div class="stats">
-
-       `<div class="stat">
-
-         `<div class="stat-value" id="totalBlocked">0</div>
-
-         `<div>Всего заблокировано</div>
-
-       `</div>
-
-       `<div class="stat">
-
-         `<div class="stat-value" id="todayBlocked">0</div>
-
-         `<div>Сегодня</div>
-
-       `</div>
-
-     `</div>
-
-     `<h4 style="margin-bottom: 5px;">Последние блокировки:</h4>
-
-     `<div class="blocked-list" id="blockedItems">
-
-   
-     `</div>
-
-     `<script src="scriptHtml.js"></script>
-
-   `</body>
-
-   `</html>
+ # HTML-код интерфейса AdBlocker
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdBlocker</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 15px;
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+      justify-content: space-between;
+    }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    input:checked + .slider {
+      background-color: #4CAF50;
+    }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    .stat {
+      background: #f0f0f0;
+      padding: 10px;
+      border-radius: 5px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    .blocked-list {
+      max-height: 200px;
+      overflow-y: auto;
+      border: 1px solid #eee;
+      border-radius: 5px;
+      padding: 10px;
+    }
+    .blocked-item {
+      padding: 5px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 12px;
+    }
+    .blocked-item:last-child {
+      border-bottom: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="status">
+    <h3 style="margin: 0;">AdBlocker</h3>
+    <label class="switch">
+      <input type="checkbox" id="toggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-value" id="totalBlocked">0</div>
+      <div>Всего заблокировано</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value" id="todayBlocked">0</div>
+      <div>Сегодня</div>
+    </div>
+  </div>
+  <h4 style="margin-bottom: 5px;">Последние блокировки:</h4>
+  <div class="blocked-list" id="blockedItems">
+    <!-- Список будет заполняться динамически -->
+  </div>
+  <script src="scriptHtml.js"></script>
+</body>
+</html>
 
    Вот так теперь будет выглядеть блокировщик.
 
