@@ -29,45 +29,26 @@
   **Шаг 1 – создание файла manifest.json**
 
   manifest.json – единственный необходимый файл, который нужен расширению. Он будет содержать метаданные о расширении, разрешения, необходимые для работы, и скрипт, который он должен запустить в фоновом режиме. Вот как это выглядит:
-`{
-
-  `"manifest\_version": 2,
-
-   `"name": "LinkedIn AdBlocker",
-
-  `"description": "Blocking ads.",
-
-  `"version": "0.0.1",
-
-  `"author": "<AUTHOR\_NAME>",
-
-    `"browser\_action": {
-
-   `"default\_title": "LinkedIn AdBlocker"
-
-  `},
-
-  `"permissions": [
-
-           `"tabs",
-
-            `"webNavigation",
-
-            `"https://www.linkedin.com/"
-
-        `],
-
-        `"background": {
-
-            `"scripts": [
-
-                `"extension.js"
-
-           `]
-
-        `}
-
-    `}
+```json
+{
+  "manifest_version": 2,
+  "name": "LinkedIn AdBlocker",
+  "description": "Blocking ads.",
+  "version": "0.0.1",
+  "author": "<AUTHOR_NAME>",
+  "browser_action": {
+    "default_title": "LinkedIn AdBlocker"
+  },
+  "permissions": [
+    "tabs",
+    "webNavigation", 
+    "https://www.linkedin.com/"
+  ],
+  "background": {
+    "scripts": ["extension.js"]
+  }
+}
+```
   Помимо метаданных, манифест настраивает разрешения. *Permissions* определяет, что разрешено делать расширению, например, получать URL-адрес текущей страницы или добавлять JavaScript на веб-сайт. Когда публикуется расширение где-либо, например, в Chrome Web Store, браузер предложит обосновать каждое запрашиваемое разрешение, чтобы обеспечить безопасность и конфиденциальность пользователей.
 
   Здесь же запрашивается разрешения для tabs и webNavigation для того, чтобы знать, когда посещается новый веб-сайт, а также что это за веб-сайт. 
@@ -79,135 +60,78 @@
   В данном случае мы будем отслеживать изменения навигации и получать URL-адрес каждого нового запрошенного веб-сайта.
 
   Здесь мы настроим наш прослушиватель событий, который будет запускать действие каждый раз, когда пользователь загружает новую веб-страницу. 
-
-  /\*Это событие срабатывает в начале загрузки страницы. В отличие от, например, webNavigation.onCompleted, оно происходит рано, давая нам возможность сразу приступить к удалению рекламы\*/
-
-  `chrome.webNavigation.onCommitted.addListener(function (tab) {
-  
-    `// Запрещает запуск скрипта во время загрузки других фреймов
-
-    `if (tab.frameId == 0) {
-
-        `chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-
-            `// Получает URL страницы
-
-            `let url = tabs[0].url;
-
-            `// Удаляет из URL необязательные определения протоколов и поддомен www
-
-            `let parsedUrl = url.replace("https://", "")
-
-                .replace("http://", "")
-
-                .replace("www.", "")
-
-            `// Удаляет путь и запросы, например linkedin.com/feed либо linkedin.com?query=value
-
-            `// Нам нужен только базовый домен
-
-            `let domain = parsedUrl.slice(0, parsedUrl.indexOf('/') == -1 ? parsedUrl.length : parsedUrl.indexOf('/'))
-
-                .slice(0, parsedUrl.indexOf('?') == -1 ? parsedUrl.length : parsedUrl.indexOf('?'));
-
-            `try {
-
-                `if (domain.length < 1 || domain === null || domain === undefined) {
-
-                    `return;
-
-               `} else if (domain == "linkedin.com") {
-
-                    `runLinkedinScript();
-
-                  `return;
-
-                `}
-
-            `} catch (err) {
-
-                `throw err;
-
-            `}
-
-      `});
-
-    `}
-
- ` });
-
- ` function runLinkedinScript() {
-
-    `// Встраивает в страницу скрипт из файла
-
-    `chrome.tabs.executeScript({
-
-        `file: 'linkedin.js'
-
-    `});
-
-    `return true;
-
- ` }
+```
+ /*Это событие срабатывает в начале загрузки страницы.
+    В отличие от, например, webNavigation.onCompleted, оно происходит рано, давая нам возможность сразу приступить к удалению рекламы*/
+chrome.webNavigation.onCommitted.addListener(function (tab) {
+  // Запрещает запуск скрипта во время загрузки других фреймов
+  if (tab.frameId == 0) {
+      chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+          // Получает URL страницы
+          let url = tabs[0].url;
+          // Удаляет из URL необязательные определения протоколов и поддомен www
+          let parsedUrl = url.replace("https://", "")
+              .replace("http://", "")
+              .replace("www.", "")
+          // Удаляет путь и запросы, например linkedin.com/feed либо linkedin.com?query=value
+          // Нам нужен только базовый домен
+          let domain = parsedUrl.slice(0, parsedUrl.indexOf('/') == -1 ? parsedUrl.length : parsedUrl.indexOf('/'))
+              .slice(0, parsedUrl.indexOf('?') == -1 ? parsedUrl.length : parsedUrl.indexOf('?'));
+          try {
+              if (domain.length < 1 || domain === null || domain === undefined) {
+                  return;
+              } else if (domain == "linkedin.com") {
+                  runLinkedinScript();
+                  return;
+              }
+          } catch (err) {
+              throw err;
+          }
+      });
+  }
+});
+function runLinkedinScript() {
+  // Встраивает в страницу скрипт из файла
+  chrome.tabs.executeScript({
+      file: 'linkedin.js'
+  });
+  return true;
+}
+```
 
   **Шаг 3 – создание файла linkedin.js**
 
   linkedin.js - определяет, как на самом деле блокировать рекламу. Вот как это выглядит:
-
- ` function removeAds() {
-
-    `// Получает все элементы 'span' на странице
-
-    `let spans = document.getElementsByTagName("span");
-
-    `for (let i = 0; i < spans.length; ++i) {
-
-        `// Проверяет, содержат ли они текст 'Promoted'
-
-        `if (spans[i].innerHTML === "Promoted") {
-
-            `// Получает div, который обёртывает рекламную вставку
-
-            `let card = spans[i].closest(".feed-shared-update-v2");
-
-            `// если класс изменился, и мы не можем найти его при помощи closest(), получает 6-го предка
-
-            `if (card === null) {
-
-                `// Может также быть card.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode :D
-
-                `let j = 0;
-
-                `card = spans[i];
-
-                `while (j < 6) {
-
-                  `card = card.parentNode;
-
-                    `++j;
-
-                `} 
-                
-            `}
-
-            `// Удаляет рекламу!
-
-            `card.setAttribute("style", "display: none !important;");
-
-        `}
-
-    `}
-
- ` }
-
- ` removeAds();
+```
+function removeAds() {
+  // Получает все элементы 'span' на странице
+  let spans = document.getElementsByTagName("span");
+  for (let i = 0; i < spans.length; ++i) {
+      // Проверяет, содержат ли они текст 'Promoted'
+      if (spans[i].innerHTML === "Promoted") {
+          // Получает div, который обёртывает рекламную вставку
+          let card = spans[i].closest(".feed-shared-update-v2");
+          // если класс изменился, и мы не можем найти его при помощи closest(), получает 6-го предка
+          if (card === null) {
+              // Может также быть card.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode :D
+              let j = 0;
+              card = spans[i];
+              while (j < 6) {
+                  card = card.parentNode;
+                  ++j;
+              }
+          }
+          // Удаляет рекламу!
+          card.setAttribute("style", "display: none !important;");
+      }
+  }
+}
+removeAds();
 // Обеспечивает, чтобы реклама удалялась по мере прокрутки страницы
-
-`setInterval(function () {
-
-    `removeAds();
-
- ` }, 100)
+setInterval(function () {
+  removeAds();
+}, 100)
+```
 
   Здесь мы перебираем все span элементы в поисках тех, которые содержат текст «Promoted», пытаемся получить div, который обтекает рекламу двумя разными способами, а затем избавляемся от него, устанавливая display: none;.
 
@@ -234,7 +158,7 @@
 
    Вы можете написать html – код, который задаст внешний вид блокировщика, а также выбрать ему иконку, которая будет отображаться в браузере.
 
-   Пример html-кода
+  # Пример html-кода
 
  # HTML-код интерфейса AdBlocker
 
@@ -356,11 +280,11 @@
   <script src="scriptHtml.js"></script>
 </body>
 </html>
-
+```
    Вот так теперь будет выглядеть блокировщик.
-
+   
    ![](Aspose.Words.c67ec8fe-5f7f-45bd-acf3-abfd170479d7.002.png)
-
+   
    Чтобы подключить данный код, необходимо изменить файл manifest.json. Теперь он будет выглядеть так:
 
   ` {
