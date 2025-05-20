@@ -31,18 +31,12 @@
   manifest.json – единственный необходимый файл, который нужен расширению. Он будет содержать метаданные о расширении, разрешения, необходимые для работы, и скрипт, который он должен запустить в фоновом режиме. Вот как это выглядит:
 
   {
-
-  `      `"manifest\_version": 2,
-
-  `      `"name": "LinkedIn AdBlocker",
-
-  `      `"description": "Blocking ads.",
-
-  `      `"version": "0.0.1",
-
-  `      `"author": "<AUTHOR\_NAME>",
-
-  `      `"browser\_action": {
+  `"manifest\_version": 2,
+  `"name": "LinkedIn AdBlocker",
+ `"description": "Blocking ads.",
+  `"version": "0.0.1",
+   `"author": "<AUTHOR\_NAME>",
+  `"browser\_action": {
 
   `          `"default\_title": "LinkedIn AdBlocker"
 
