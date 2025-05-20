@@ -159,9 +159,7 @@ setInterval(function () {
    Вы можете написать html – код, который задаст внешний вид блокировщика, а также выбрать ему иконку, которая будет отображаться в браузере.
 
   # Пример html-кода
-
- # HTML-код интерфейса AdBlocker
-
+  
 ```html
 <!DOCTYPE html>
 <html lang="ru">
@@ -286,413 +284,219 @@ setInterval(function () {
    ![](Aspose.Words.c67ec8fe-5f7f-45bd-acf3-abfd170479d7.002.png)
    
    Чтобы подключить данный код, необходимо изменить файл manifest.json. Теперь он будет выглядеть так:
-
-  ` {
-
-     `"manifest\_version": 2,
-
-     `"name": "AdBlocker",
-
-     `"description": "Blocking ads.",
-
-     `"version": "0.0.1",
-
-     `"author": "Голданова Л.В.",
-
-     `"browser\_action": {
-
-       `"default\_title": "Блокировщик рекламы",
-
-       `"default\_icon": "icon.png",
-
-       `"default\_popup": "index.html"
-
-     `},
-
-     `"permissions": [
-
-       `"activeTab",
-
-       `"webNavigation",
-
-       `"storage",
-
-       `"webRequest",
-
-       `"webRequestBlocking",
-
-       `"<all\_urls>"
-
-     `],
-
-     `"background": {
-
-       `"scripts": ["background.js"],
-
-       `"persistent": true
-
-     `},
-
-     `"content\_scripts": [
-
-       `{
-
-         `"matches": ["<all\_urls>"],
-
-         `"js": ["linkedin.js"],
-
-         `"run\_at": "document\_end"
-
-       `}
-
-     `]
-
-   `}
-
+```
+{
+  "manifest_version": 2,
+  "name": "AdBlocker",
+  "description": "Blocking ads.",
+  "version": "0.0.1",
+  "author": "Голданова Л.В.",
+  "browser_action": {
+    "default_title": "Блокировщик рекламы",
+    "default_icon": "icon.png",
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "activeTab",
+    "webNavigation",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["linkedin.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
+```
    Обратите внимание, что мы указали нашу html - страницу в строке "default\_popup": "index.html". чтобы добавить иконку, скачайте ее в интернете и пропишите строчку для ее добавления - "default\_icon": "icon.png".
 
    Также необходимо добавить скрипт, который будет взаимодействовать и с html- страницей, и с основными js скриптами. Вы можете назвать его как хотите. Данный код будет считывать количество заблокированных реклам, а также указывать их url. Пример кода для представленной html-страницы:
 
-  ` document.addEventListener('DOMContentLoaded', function() {
-
-     `const toggle = document.getElementById('toggle');
-
-     `const totalBlockedEl = document.getElementById('totalBlocked');
-
-     `const todayBlockedEl = document.getElementById('todayBlocked');
-
-     `const blockedItemsEl = document.getElementById('blockedItems');
-
-     `// Загрузка состояния
-
-     `chrome.storage.local.get(['enabled', 'stats'], function(data) {
-
-       `toggle.checked = data.enabled !== false;
-
-       `updateStats(data.stats);
-
-     `});
-
-     `// Обновление статистики
-
-     `function updateStats(stats) {
-
-       `if (!stats) return;
-
-       `totalBlockedEl.textContent = stats.totalBlocked || 0;
-
-       `// Подсчет блокировок за сегодня
-
-       `const today = new Date().toDateString();
-
-       `const todayCount = stats.lastBlocked ? 
-
-         `stats.lastBlocked.filter(item => 
-
-           `new Date(item.timestamp).toDateString() === today
-
-         `).length : 0;
-
-       `todayBlockedEl.textContent = todayCount;
-
-       `// Обновление списка
-
-       `blockedItemsEl.innerHTML = '';
-
-       `if (stats.lastBlocked) {
-
-         `stats.lastBlocked.forEach(item => {
-
-           `const div = document.createElement('div');
-
-           `div.className = 'blocked-item';
-
-   `div.textContent = ${item.url} (${item.selector || item.type});
-
-           `blockedItemsEl.appendChild(div);
-
-         `});
-
-       `}
-
-  `}
-  
-    `// Слушаем изменения хранилища
-
-    `chrome.storage.onChanged.addListener(function(changes) {
-
-       `if (changes.stats) {
-
-         `updateStats(changes.stats.newValue);
-
-       `}
-
-     `});
-
-     `// Переключение
-
-     `toggle.addEventListener('change', function() {
-
-       `chrome.storage.local.set({ enabled: this.checked });
-
-       `chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
-
-         `chrome.tabs.reload(tabs[0].id);
-
-       `});
-
-     `});
-
-     `// Первоначальная загрузка
-
-     `chrome.runtime.sendMessage({type: "get\_stats"}, function(response) {
-
-       `updateStats(response);
-
-     `});
-
-   `});
-
-   Также были модифицированы основные js – скрипты, к ним добавились новые функции:
-
-   1) background\.js
-
-   ` let stats = {
-
-     `totalBlocked: 0,
-
-     `lastBlocked: [],
-
-     `lastUpdated: Date.now()
-
-   `};
-
-   `// Инициализация хранилища
-
-   `chrome.runtime.onInstalled.addListener(() => {
-
-     `chrome.storage.local.set({ 
-
-       `stats: stats,
-
-       `enabled: true 
-
-     `});
-
-   `});
-
-   `chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-
-     `if (request.type === "ad\_blocked") {
-
-       `chrome.storage.local.get(['stats', 'enabled'], (result) => {
-
-         `if (result.enabled !== false) {
-
-           `const currentStats = result.stats || stats;
-
-           `const updatedStats = {
-
-             `totalBlocked: currentStats.totalBlocked + 1,
-
-             `lastBlocked: [{
-
-               `url: request.url,
-
-               `selector: request.selector,
-
-               `elementType: request.elementType,
-
-               `timestamp: Date.now()
-
-             `}, ...currentStats.lastBlocked.slice(0, 4)],
-
-             `lastUpdated: Date.now()
-
-           `};     
-
-           `chrome.storage.local.set({ stats: updatedStats }, () => {
-
-             `if (chrome.runtime.lastError) {
-
-               `console.error('Storage error:', chrome.runtime.lastError);
-
-             `}
-
-           `});
-
-         `}
-
-       `});
-
-     `}
-
-     `if (request.type === "get\_stats") {
-
-       `chrome.storage.local.get(['stats'], (result) => {
-
-         `sendResponse(result.stats || stats);
-
-       `});
-
-       `return true;
-
-     `}
-
-   `});
-
-   `chrome.webRequest.onBeforeRequest.addListener(
-
-     `(details) => {
-
-       `if (details.url.match(/ads|adservice|doubleclick|tracking|analytics/i)) {
-
-         `chrome.storage.local.get(['enabled'], (result) => {
-
-           `if (result.enabled !== false) {
-
-             `chrome.storage.local.get(['stats'], (res) => {
-
-               `const currentStats = res.stats || stats;
-
-               `const updatedStats = {
-
-                 `totalBlocked: currentStats.totalBlocked + 1,
-
-                 `lastBlocked: [{
-
-                   `url: details.url,
-
-                   `type: 'network\_request',
-
-                   `timestamp: Date.now()
-
-                 `}, ...currentStats.lastBlocked.slice(0, 4)],
-
-                 `lastUpdated: Date.now()
-
-               `};
-
-               `chrome.storage.local.set({ stats: updatedStats });
-
-             `});
-
-             `return { cancel: true };
-
-           `}
-
-         `});
-
-       `}
-
-     `},
-
-     `{ urls: ["<all\_urls>"] },
-
-     `["blocking"]
-
-   `);
-
-   2) linkedin\.js
-
- `  const adSelectors = [
-
-     `'.ad', '.ads', '.ad-container', '.ad-banner', '.ad-wrapper',
-
-     `'[class\*="advert"]', '[id\*="advert"]', '[data-ad-type]',
-
-     `'iframe[src\*="ads"]', 'iframe[src\*="doubleclick"]', 'iframe[src\*="adservice"]',
-
-     `'.social-widget', '[id\*="social-plugin"]',
-
-     `'.popup', '.modal[data-ad]',
-
-     `'.video-ads', '.preroll-container'
-
- `  ];
-
-  ` function blockAds() {
-
-     `let blockedCount = 0;
-
-     `adSelectors.forEach(selector => {
-
-       `document.querySelectorAll(selector).forEach(ad => {
-
-         `if (ad.style.display !== 'none') {
-
-           `ad.style.display = 'none';
-
-           `ad.setAttribute('data-adblocked', 'true');
-
-           `blockedCount++;
-
-           `chrome.runtime.sendMessage({
-
-             `type: "ad\_blocked",
-
-             `url: window.location.href,
-
-             `selector: selector,
-
-             `elementType: ad.tagName
-
-           `});
-
-         `}
-
-       `});
-
-     `});
-
-     `document.querySelectorAll('script').forEach(script => {
-
-       `if (script.src && /ads|adservice|doubleclick|tracking|analytics/i.test(script.src)) {
-
-         `script.remove();
-
-         `blockedCount++;
-
-       `}
-
-     `});
-
-     `return blockedCount;
-
-   `}
-
-   `const observer = new MutationObserver(() => {
-
-     `blockAds();
-
-   `});
-
-   `function initAdBlock() {
-
-     `blockAds();
-
-     `observer.observe(document, {
-
-       `childList: true,
-
-       `subtree: true,
-
-       `attributes: false,
-
-       `characterData: false
-
-     `});
-
-   `}
-
-   `if (document.readyState === 'loading') {
-
-     `document.addEventListener('DOMContentLoaded', initAdBlock);
-
-   `} else {
-
-     `initAdBlock();
-
-   `}
-
+```
+document.addEventListener('DOMContentLoaded', function() {
+  const toggle = document.getElementById('toggle');
+  const totalBlockedEl = document.getElementById('totalBlocked');
+  const todayBlockedEl = document.getElementById('todayBlocked');
+  const blockedItemsEl = document.getElementById('blockedItems');
+  // Загрузка состояния
+  chrome.storage.local.get(['enabled', 'stats'], function(data) {
+    toggle.checked = data.enabled !== false;
+    updateStats(data.stats);
+  });
+  // Обновление статистики
+  function updateStats(stats) {
+    if (!stats) return;
+    totalBlockedEl.textContent = stats.totalBlocked || 0;
+    // Подсчет блокировок за сегодня
+    const today = new Date().toDateString();
+    const todayCount = stats.lastBlocked ? 
+      stats.lastBlocked.filter(item => 
+        new Date(item.timestamp).toDateString() === today
+      ).length : 0;
+    todayBlockedEl.textContent = todayCount;
+    // Обновление списка
+    blockedItemsEl.innerHTML = '';
+    if (stats.lastBlocked) {
+      stats.lastBlocked.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'blocked-item';
+        div.textContent = `${item.url} (${item.selector || item.type})`;
+        blockedItemsEl.appendChild(div);
+      });
+    }
+  }
+  // Слушаем изменения хранилища
+  chrome.storage.onChanged.addListener(function(changes) {
+    if (changes.stats) {
+      updateStats(changes.stats.newValue);
+    }
+  });
+  // Переключение
+  toggle.addEventListener('change', function() {
+    chrome.storage.local.set({ enabled: this.checked });
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+      chrome.tabs.reload(tabs[0].id);
+    });
+  });
+  // Первоначальная загрузка
+  chrome.runtime.sendMessage({type: "get_stats"}, function(response) {
+    updateStats(response);
+  });
+});
+```
+Также были модифицированы основные js – скрипты, к ним добавились новые функции:
+1) background.js
+```
+let stats = {
+  totalBlocked: 0,
+  lastBlocked: [],
+  lastUpdated: Date.now()
+};
+// Инициализация хранилища
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.local.set({ 
+    stats: stats,
+    enabled: true 
+  });
+});
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.type === "ad_blocked") {
+    chrome.storage.local.get(['stats', 'enabled'], (result) => {
+      if (result.enabled !== false) {
+        const currentStats = result.stats || stats;
+        const updatedStats = {
+          totalBlocked: currentStats.totalBlocked + 1,
+          lastBlocked: [{
+            url: request.url,
+            selector: request.selector,
+            elementType: request.elementType,
+            timestamp: Date.now()
+          }, ...currentStats.lastBlocked.slice(0, 4)],
+          lastUpdated: Date.now()
+        };
+        
+        chrome.storage.local.set({ stats: updatedStats }, () => {
+          if (chrome.runtime.lastError) {
+            console.error('Storage error:', chrome.runtime.lastError);
+          }
+        });
+      }
+    });
+  }
+  if (request.type === "get_stats") {
+    chrome.storage.local.get(['stats'], (result) => {
+      sendResponse(result.stats || stats);
+    });
+    return true;
+  }
+});
+chrome.webRequest.onBeforeRequest.addListener(
+  (details) => {
+    if (details.url.match(/ads|adservice|doubleclick|tracking|analytics/i)) {
+      chrome.storage.local.get(['enabled'], (result) => {
+        if (result.enabled !== false) {
+          chrome.storage.local.get(['stats'], (res) => {
+            const currentStats = res.stats || stats;
+            const updatedStats = {
+              totalBlocked: currentStats.totalBlocked + 1,
+              lastBlocked: [{
+                url: details.url,
+                type: 'network_request',
+                timestamp: Date.now()
+              }, ...currentStats.lastBlocked.slice(0, 4)],
+              lastUpdated: Date.now()
+            };
+            chrome.storage.local.set({ stats: updatedStats });
+          });
+          return { cancel: true };
+        }
+      });
+    }
+  },
+  { urls: ["<all_urls>"] },
+  ["blocking"]
+);
+```
+2) linkedin.js
+ ```
+const adSelectors = [
+  '.ad', '.ads', '.ad-container', '.ad-banner', '.ad-wrapper',
+  '[class*="advert"]', '[id*="advert"]', '[data-ad-type]',
+  'iframe[src*="ads"]', 'iframe[src*="doubleclick"]', 'iframe[src*="adservice"]',
+  '.social-widget', '[id*="social-plugin"]',
+  '.popup', '.modal[data-ad]',
+  '.video-ads', '.preroll-container'
+];
+function blockAds() {
+  let blockedCount = 0;
+  adSelectors.forEach(selector => {
+    document.querySelectorAll(selector).forEach(ad => {
+      if (ad.style.display !== 'none') {
+        ad.style.display = 'none';
+        ad.setAttribute('data-adblocked', 'true');
+        blockedCount++;
+        chrome.runtime.sendMessage({
+          type: "ad_blocked",
+          url: window.location.href,
+          selector: selector,
+          elementType: ad.tagName
+        });
+      }
+    });
+  });
+  document.querySelectorAll('script').forEach(script => {
+    if (script.src && /ads|adservice|doubleclick|tracking|analytics/i.test(script.src)) {
+      script.remove();
+      blockedCount++;
+    }
+  });
+  return blockedCount;
+}
+const observer = new MutationObserver(() => {
+  blockAds();
+});
+function initAdBlock() {
+  blockAds();
+  observer.observe(document, {
+    childList: true,
+    subtree: true,
+    attributes: false,
+    characterData: false
+  });
+}
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initAdBlock);
+} else {
+  initAdBlock();
+}
+```
    После этого расширение было снова загружено в браузер. Новый модифицированный блокировщик готов к работе.
