@@ -29,9 +29,9 @@
   **Шаг 1 – создание файла manifest.json**
 
   manifest.json – единственный необходимый файл, который нужен расширению. Он будет содержать метаданные о расширении, разрешения, необходимые для работы, и скрипт, который он должен запустить в фоновом режиме. Вот как это выглядит:
-{
+`{
 
-   `"manifest\_version": 2,
+  `"manifest\_version": 2,
 
    `"name": "LinkedIn AdBlocker",
 
@@ -82,135 +82,135 @@
 
   /\*Это событие срабатывает в начале загрузки страницы.
 
-  `    `В отличие от, например, webNavigation.onCompleted, оно происходит рано, давая нам возможность сразу приступить к удалению рекламы\*/
+      `В отличие от, например, webNavigation.onCompleted, оно происходит рано, давая нам возможность сразу приступить к удалению рекламы\*/
 
-  chrome.webNavigation.onCommitted.addListener(function (tab) {
+  `chrome.webNavigation.onCommitted.addListener(function (tab) {
 
-  `  `// Запрещает запуск скрипта во время загрузки других фреймов
+    `// Запрещает запуск скрипта во время загрузки других фреймов
 
-  `  `if (tab.frameId == 0) {
+    `if (tab.frameId == 0) {
 
-  `      `chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
+        `chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
 
-  `          `// Получает URL страницы
+            `// Получает URL страницы
 
-  `          `let url = tabs[0].url;
+            `let url = tabs[0].url;
 
-  `          `// Удаляет из URL необязательные определения протоколов и поддомен www
+            `// Удаляет из URL необязательные определения протоколов и поддомен www
 
-  `          `let parsedUrl = url.replace("https://", "")
+            `let parsedUrl = url.replace("https://", "")
 
                 .replace("http://", "")
 
                 .replace("www.", "")
 
-  `          `// Удаляет путь и запросы, например linkedin.com/feed либо linkedin.com?query=value
+            `// Удаляет путь и запросы, например linkedin.com/feed либо linkedin.com?query=value
 
-  `          `// Нам нужен только базовый домен
+            `// Нам нужен только базовый домен
 
-  `          `let domain = parsedUrl.slice(0, parsedUrl.indexOf('/') == -1 ? parsedUrl.length : parsedUrl.indexOf('/'))
+            `let domain = parsedUrl.slice(0, parsedUrl.indexOf('/') == -1 ? parsedUrl.length : parsedUrl.indexOf('/'))
 
                 .slice(0, parsedUrl.indexOf('?') == -1 ? parsedUrl.length : parsedUrl.indexOf('?'));
 
-  `          `try {
+            `try {
 
-  `              `if (domain.length < 1 || domain === null || domain === undefined) {
+                `if (domain.length < 1 || domain === null || domain === undefined) {
 
-  `                  `return;
+                    `return;
 
-  `              `} else if (domain == "linkedin.com") {
+               `} else if (domain == "linkedin.com") {
 
-  `                  `runLinkedinScript();
+                    `runLinkedinScript();
 
-  `                  `return;
+                  `return;
 
-  `              `}
+                `}
 
-  `          `} catch (err) {
+            `} catch (err) {
 
-  `              `throw err;
+                `throw err;
 
-  `          `}
+            `}
 
-  `      `});
+      `});
 
-  `  `}
+    `}
 
   });
 
-  function runLinkedinScript() {
+ ` function runLinkedinScript() {
 
-  `  `// Встраивает в страницу скрипт из файла
+    `// Встраивает в страницу скрипт из файла
 
-  `  `chrome.tabs.executeScript({
+    `chrome.tabs.executeScript({
 
-  `      `file: 'linkedin.js'
+        `file: 'linkedin.js'
 
-  `  `});
+    `});
 
-  `  `return true;
+    `return true;
 
-  }
+ ` }
 
   **Шаг 3 – создание файла linkedin.js**
 
   linkedin.js - определяет, как на самом деле блокировать рекламу. Вот как это выглядит:
 
-  function removeAds() {
+ ` function removeAds() {
 
-  `  `// Получает все элементы 'span' на странице
+    `// Получает все элементы 'span' на странице
 
-  `  `let spans = document.getElementsByTagName("span");
+    `let spans = document.getElementsByTagName("span");
 
-  `  `for (let i = 0; i < spans.length; ++i) {
+    `for (let i = 0; i < spans.length; ++i) {
 
-  `      `// Проверяет, содержат ли они текст 'Promoted'
+        `// Проверяет, содержат ли они текст 'Promoted'
 
-  `      `if (spans[i].innerHTML === "Promoted") {
+        `if (spans[i].innerHTML === "Promoted") {
 
-  `          `// Получает div, который обёртывает рекламную вставку
+            `// Получает div, который обёртывает рекламную вставку
 
-  `          `let card = spans[i].closest(".feed-shared-update-v2");
+            `let card = spans[i].closest(".feed-shared-update-v2");
 
-  `          `// если класс изменился, и мы не можем найти его при помощи closest(), получает 6-го предка
+            `// если класс изменился, и мы не можем найти его при помощи closest(), получает 6-го предка
 
-  `          `if (card === null) {
+            `if (card === null) {
 
-  `              `// Может также быть card.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode :D
+                `// Может также быть card.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode :D
 
-  `              `let j = 0;
+                `let j = 0;
 
-  `              `card = spans[i];
+                `card = spans[i];
 
-  `              `while (j < 6) {
+                `while (j < 6) {
 
-  `                  `card = card.parentNode;
+                  `card = card.parentNode;
 
-  `                  `++j;
+                    `++j;
 
-  `              `}
+                `}
 
-  `          `}
+            `}
 
-  `          `// Удаляет рекламу!
+            `// Удаляет рекламу!
 
-  `          `card.setAttribute("style", "display: none !important;");
+            `card.setAttribute("style", "display: none !important;");
 
-  `      `}
+        `}
 
-  `  `}
+    `}
 
-  }
+ ` }
 
-  removeAds();
+ ` removeAds();
 
-  // Обеспечивает, чтобы реклама удалялась по мере прокрутки страницы
+ ` // Обеспечивает, чтобы реклама удалялась по мере прокрутки страницы
 
-  setInterval(function () {
+`setInterval(function () {
 
   `  `removeAds();
 
-  }, 100)
+ ` }, 100)
 
   Здесь мы перебираем все span элементы в поисках тех, которые содержат текст «Promoted», пытаемся получить div, который обтекает рекламу двумя разными способами, а затем избавляемся от него, устанавливая display: none;.
 
@@ -239,239 +239,238 @@
 
    Пример html-кода
 
-   <!DOCTYPE html>
+`   <!DOCTYPE html>
 
-   <html lang="ru">
+`   <html lang="ru">
 
-   <head>
+`   <head>
 
-   `  `<meta charset="UTF-8">
+     `<meta charset="UTF-8">
 
-   `  `<meta name="viewport" content="width=device-width, initial-scale=1.0">
+     `<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   `  `<title>AdBlocker</title>
+     `<title>AdBlocker</title>
 
-   `  `<style>
+     `<style>
 
-   `    `body {
+       `body {
 
-   `      `width: 300px;
+         `width: 300px;
 
-   `      `padding: 15px;
+         `padding: 15px;
 
-   `      `font-family: Arial, sans-serif;
+         `font-family: Arial, sans-serif;
 
-   `      `margin: 0;
+        `margin: 0;
 
-   `    `}
+       `}
 
        .status {
 
-   `      `display: flex;
+         `display: flex;
 
-   `      `align-items: center;
+        `align-items: center;
 
-   `      `margin-bottom: 15px;
+         `margin-bottom: 15px;
 
-   `      `justify-content: space-between;
+         `justify-content: space-between;
 
-   `    `}
+       `}
 
-       .switch {
+     `  .switch {
 
-   `      `position: relative;
+         `position: relative;
 
-   `      `display: inline-block;
+         `display: inline-block;
 
-   `      `width: 50px;
+         `width: 50px;
 
-   `      `height: 24px;
+         `height: 24px;
 
-   `    `}
+       `}
 
-       .switch input {
+    `   .switch input {
 
-   `      `opacity: 0;
+         `opacity: 0;
 
-   `      `width: 0;
+         `width: 0;
 
-   `      `height: 0;
+         `height: 0;
 
-   `    `}
+       `}
 
-       .slider {
+     `  .slider {
 
-   `      `position: absolute;
+         `position: absolute;
 
-   `      `cursor: pointer;
+         `cursor: pointer;
 
-   `      `top: 0;
+         `top: 0;
 
-   `      `left: 0;
+         `left: 0;
 
-   `      `right: 0;
+         `right: 0;
 
-   `      `bottom: 0;
+         `bottom: 0;
 
-   `      `background-color: #ccc;
+         `background-color: #ccc;
 
-   `      `transition: .4s;
+         `transition: .4s;
 
-   `      `border-radius: 24px;
+         `border-radius: 24px;
 
-   `    `}
+       `}
 
-       .slider:before {
+   `    .slider:before {
 
-   `      `position: absolute;
+         `position: absolute;
 
-   `      `content: "";
+         `content: "";
 
-   `      `height: 16px;
+         `height: 16px;
 
-   `      `width: 16px;
+         `width: 16px;
 
-   `      `left: 4px;
+         `left: 4px;
 
-   `      `bottom: 4px;
+         `bottom: 4px;
 
-   `      `background-color: white;
+         `background-color: white;
 
-   `      `transition: .4s;
+         `transition: .4s;
 
-   `      `border-radius: 50%;
+         `border-radius: 50%;
 
-   `    `}
+       `}
 
-   `    `input:checked + .slider {
+       `input:checked + .slider {
 
-   `      `background-color: #4CAF50;
+         `background-color: #4CAF50;
 
-   `    `}
+       `}
 
-   `    `input:checked + .slider:before {
+       `input:checked + .slider:before {
 
-   `      `transform: translateX(26px);
+         `transform: translateX(26px);
 
-   `    `}
+       `}
 
        .stats {
 
-   `      `display: grid;
+         `display: grid;
 
-   `      `grid-template-columns: 1fr 1fr;
+         `grid-template-columns: 1fr 1fr;
 
-   `      `gap: 10px;
+         `gap: 10px;
 
-   `      `margin-bottom: 15px;
+         `margin-bottom: 15px;
 
-   `    `}
+       `}
 
-       .stat {
+   `    .stat {
 
-   `      `background: #f0f0f0;
+         `background: #f0f0f0;
 
-   `      `padding: 10px;
+         `padding: 10px;
 
-   `      `border-radius: 5px;
+         `border-radius: 5px;
 
-   `      `text-align: center;
+         `text-align: center;
 
-   `    `}
+       `}
 
-       .stat-value {
+   `    .stat-value {
 
-   `      `font-size: 18px;
+         `font-size: 18px;
 
-   `      `font-weight: bold;
+         `font-weight: bold;
 
-   `      `color: #4CAF50;
+         `color: #4CAF50;
 
-   `    `}
+       `}
 
-       .blocked-list {
+   `    .blocked-list {
 
-   `      `max-height: 200px;
+         `max-height: 200px;
 
-   `      `overflow-y: auto;
+         `overflow-y: auto;
 
-   `      `border: 1px solid #eee;
+         `border: 1px solid #eee;
 
-   `      `border-radius: 5px;
+         `border-radius: 5px;
 
-   `      `padding: 10px;
+         `padding: 10px;
 
-   `    `}
+       `}
 
-       .blocked-item {
+   `    .blocked-item {
 
-   `      `padding: 5px 0;
+         `padding: 5px 0;
 
-   `      `border-bottom: 1px solid #f0f0f0;
+         `border-bottom: 1px solid #f0f0f0;
 
-   `      `font-size: 12px;
+         `font-size: 12px;
 
-   `    `}
+       `}
 
-       .blocked-item:last-child {
+   `    .blocked-item:last-child {
 
-   `      `border-bottom: none;
+         `border-bottom: none;
 
-   `    `}
+       `}
 
-   `  `</style>
+     `</style>
 
-   </head>
+   `</head>
 
-   <body>
+   `<body>
 
-   `  `<div class="status">
+     `<div class="status">
 
-   `    `<h3 style="margin: 0;">AdBlocker</h3>
+       `<h3 style="margin: 0;">AdBlocker</h3>
 
-   `    `<label class="switch">
+       `<label class="switch">
 
-   `      `<input type="checkbox" id="toggle" checked>
+         `<input type="checkbox" id="toggle" checked>
 
-   `      `<span class="slider"></span>
+         `<span class="slider"></span>
 
-   `    `</label>
+       `</label>
 
-   `  `</div>
+     `</div>
 
-   `  `<div class="stats">
+     `<div class="stats">
 
-   `    `<div class="stat">
+       `<div class="stat">
 
-   `      `<div class="stat-value" id="totalBlocked">0</div>
+         `<div class="stat-value" id="totalBlocked">0</div>
 
-   `      `<div>Всего заблокировано</div>
+         `<div>Всего заблокировано</div>
 
-   `    `</div>
+       `</div>
 
-   `    `<div class="stat">
+       `<div class="stat">
 
-   `      `<div class="stat-value" id="todayBlocked">0</div>
+         `<div class="stat-value" id="todayBlocked">0</div>
 
-   `      `<div>Сегодня</div>
+         `<div>Сегодня</div>
 
-   `    `</div>
+       `</div>
 
-   `  `</div>
+     `</div>
 
-   `  `<h4 style="margin-bottom: 5px;">Последние блокировки:</h4>
+     `<h4 style="margin-bottom: 5px;">Последние блокировки:</h4>
 
-   `  `<div class="blocked-list" id="blockedItems">
+     `<div class="blocked-list" id="blockedItems">
 
-   `    `<!-- Список будет заполняться динамически -->
+   
+     `</div>
 
-   `  `</div>
+     `<script src="scriptHtml.js"></script>
 
-   `  `<script src="scriptHtml.js"></script>
+   `</body>
 
-   </body>
-
-   </html>
+   `</html>
 
    Вот так теперь будет выглядеть блокировщик.
 
@@ -479,420 +478,412 @@
 
    Чтобы подключить данный код, необходимо изменить файл manifest.json. Теперь он будет выглядеть так:
 
-   {
+  ` {
 
-   `  `"manifest\_version": 2,
+     `"manifest\_version": 2,
 
-   `  `"name": "AdBlocker",
+     `"name": "AdBlocker",
 
-   `  `"description": "Blocking ads.",
+     `"description": "Blocking ads.",
 
-   `  `"version": "0.0.1",
+     `"version": "0.0.1",
 
-   `  `"author": "Голданова Л.В.",
+     `"author": "Голданова Л.В.",
 
-   `  `"browser\_action": {
+     `"browser\_action": {
 
-   `    `"default\_title": "Блокировщик рекламы",
+       `"default\_title": "Блокировщик рекламы",
 
-   `    `"default\_icon": "icon.png",
+       `"default\_icon": "icon.png",
 
-   `    `"default\_popup": "index.html"
+       `"default\_popup": "index.html"
 
-   `  `},
+     `},
 
-   `  `"permissions": [
+     `"permissions": [
 
-   `    `"activeTab",
+       `"activeTab",
 
-   `    `"webNavigation",
+       `"webNavigation",
 
-   `    `"storage",
+       `"storage",
 
-   `    `"webRequest",
+       `"webRequest",
 
-   `    `"webRequestBlocking",
+       `"webRequestBlocking",
 
-   `    `"<all\_urls>"
+       `"<all\_urls>"
 
-   `  `],
+     `],
 
-   `  `"background": {
+     `"background": {
 
-   `    `"scripts": ["background.js"],
+       `"scripts": ["background.js"],
 
-   `    `"persistent": true
+       `"persistent": true
 
-   `  `},
+     `},
 
-   `  `"content\_scripts": [
+     `"content\_scripts": [
 
-   `    `{
+       `{
 
-   `      `"matches": ["<all\_urls>"],
+         `"matches": ["<all\_urls>"],
 
-   `      `"js": ["linkedin.js"],
+         `"js": ["linkedin.js"],
 
-   `      `"run\_at": "document\_end"
+         `"run\_at": "document\_end"
 
-   `    `}
+       `}
 
-   `  `]
+     `]
 
-   }
+   `}
 
    Обратите внимание, что мы указали нашу html - страницу в строке "default\_popup": "index.html". чтобы добавить иконку, скачайте ее в интернете и пропишите строчку для ее добавления - "default\_icon": "icon.png".
 
    Также необходимо добавить скрипт, который будет взаимодействовать и с html- страницей, и с основными js скриптами. Вы можете назвать его как хотите. Данный код будет считывать количество заблокированных реклам, а также указывать их url. Пример кода для представленной html-страницы:
 
-   document.addEventListener('DOMContentLoaded', function() {
+  ` document.addEventListener('DOMContentLoaded', function() {
 
-   `  `const toggle = document.getElementById('toggle');
+     `const toggle = document.getElementById('toggle');
 
-   `  `const totalBlockedEl = document.getElementById('totalBlocked');
+     `const totalBlockedEl = document.getElementById('totalBlocked');
 
-   `  `const todayBlockedEl = document.getElementById('todayBlocked');
+     `const todayBlockedEl = document.getElementById('todayBlocked');
 
-   `  `const blockedItemsEl = document.getElementById('blockedItems');
+     `const blockedItemsEl = document.getElementById('blockedItems');
 
-   `  `// Загрузка состояния
+     `// Загрузка состояния
 
-   `  `chrome.storage.local.get(['enabled', 'stats'], function(data) {
+     `chrome.storage.local.get(['enabled', 'stats'], function(data) {
 
-   `    `toggle.checked = data.enabled !== false;
+       `toggle.checked = data.enabled !== false;
 
-   `    `updateStats(data.stats);
+       `updateStats(data.stats);
 
-   `  `});
+     `});
 
-   `  `// Обновление статистики
+     `// Обновление статистики
 
-   `  `function updateStats(stats) {
+     `function updateStats(stats) {
 
-   `    `if (!stats) return;
+       `if (!stats) return;
 
-    
+       `totalBlockedEl.textContent = stats.totalBlocked || 0;
 
-   `    `totalBlockedEl.textContent = stats.totalBlocked || 0;
+       `// Подсчет блокировок за сегодня
 
-    
+       `const today = new Date().toDateString();
 
-   `    `// Подсчет блокировок за сегодня
+       `const todayCount = stats.lastBlocked ? 
 
-   `    `const today = new Date().toDateString();
+         `stats.lastBlocked.filter(item => 
 
-   `    `const todayCount = stats.lastBlocked ? 
+           `new Date(item.timestamp).toDateString() === today
 
-   `      `stats.lastBlocked.filter(item => 
+         `).length : 0;
 
-   `        `new Date(item.timestamp).toDateString() === today
+       `todayBlockedEl.textContent = todayCount;
 
-   `      `).length : 0;
+       `// Обновление списка
 
-   `    `todayBlockedEl.textContent = todayCount;
+       `blockedItemsEl.innerHTML = '';
 
-    
+       `if (stats.lastBlocked) {
 
-   `    `// Обновление списка
+         `stats.lastBlocked.forEach(item => {
 
-   `    `blockedItemsEl.innerHTML = '';
+           `const div = document.createElement('div');
 
-   `    `if (stats.lastBlocked) {
+           `div.className = 'blocked-item';
 
-   `      `stats.lastBlocked.forEach(item => {
+   `div.textContent = ${item.url} (${item.selector || item.type});
 
-   `        `const div = document.createElement('div');
+           `blockedItemsEl.appendChild(div);
 
-   `        `div.className = 'blocked-item';
+         `});
 
-   `        `div.textContent = `${item.url} (${item.selector || item.type})`;
+       `}
 
-   `        `blockedItemsEl.appendChild(div);
+  `}
+  
+    `// Слушаем изменения хранилища
 
-   `      `});
+    `chrome.storage.onChanged.addListener(function(changes) {
 
-   `    `}
+       `if (changes.stats) {
 
-   `  `}
+         `updateStats(changes.stats.newValue);
 
-   `  `// Слушаем изменения хранилища
+       `}
 
-   `  `chrome.storage.onChanged.addListener(function(changes) {
+     `});
 
-   `    `if (changes.stats) {
+     `// Переключение
 
-   `      `updateStats(changes.stats.newValue);
+     `toggle.addEventListener('change', function() {
 
-   `    `}
+       `chrome.storage.local.set({ enabled: this.checked });
 
-   `  `});
+       `chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
 
-   `  `// Переключение
+         `chrome.tabs.reload(tabs[0].id);
 
-   `  `toggle.addEventListener('change', function() {
+       `});
 
-   `    `chrome.storage.local.set({ enabled: this.checked });
+     `});
 
-   `    `chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
+     `// Первоначальная загрузка
 
-   `      `chrome.tabs.reload(tabs[0].id);
+     `chrome.runtime.sendMessage({type: "get\_stats"}, function(response) {
 
-   `    `});
+       `updateStats(response);
 
-   `  `});
+     `});
 
-   `  `// Первоначальная загрузка
-
-   `  `chrome.runtime.sendMessage({type: "get\_stats"}, function(response) {
-
-   `    `updateStats(response);
-
-   `  `});
-
-   });
+   `});
 
    Также были модифицированы основные js – скрипты, к ним добавились новые функции:
 
    1) background\.js
 
-   let stats = {
+   ` let stats = {
 
-   `  `totalBlocked: 0,
+     `totalBlocked: 0,
 
-   `  `lastBlocked: [],
+     `lastBlocked: [],
 
-   `  `lastUpdated: Date.now()
+     `lastUpdated: Date.now()
 
-   };
+   `};
 
-   // Инициализация хранилища
+   `// Инициализация хранилища
 
-   chrome.runtime.onInstalled.addListener(() => {
+   `chrome.runtime.onInstalled.addListener(() => {
 
-   `  `chrome.storage.local.set({ 
+     `chrome.storage.local.set({ 
 
-   `    `stats: stats,
+       `stats: stats,
 
-   `    `enabled: true 
+       `enabled: true 
 
-   `  `});
+     `});
 
-   });
+   `});
 
-   chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+   `chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
-   `  `if (request.type === "ad\_blocked") {
+     `if (request.type === "ad\_blocked") {
 
-   `    `chrome.storage.local.get(['stats', 'enabled'], (result) => {
+       `chrome.storage.local.get(['stats', 'enabled'], (result) => {
 
-   `      `if (result.enabled !== false) {
+         `if (result.enabled !== false) {
 
-   `        `const currentStats = result.stats || stats;
+           `const currentStats = result.stats || stats;
 
-   `        `const updatedStats = {
+           `const updatedStats = {
 
-   `          `totalBlocked: currentStats.totalBlocked + 1,
+             `totalBlocked: currentStats.totalBlocked + 1,
 
-   `          `lastBlocked: [{
+             `lastBlocked: [{
 
-   `            `url: request.url,
+               `url: request.url,
 
-   `            `selector: request.selector,
+               `selector: request.selector,
 
-   `            `elementType: request.elementType,
+               `elementType: request.elementType,
 
-   `            `timestamp: Date.now()
+               `timestamp: Date.now()
 
-   `          `}, ...currentStats.lastBlocked.slice(0, 4)],
+             `}, ...currentStats.lastBlocked.slice(0, 4)],
 
-   `          `lastUpdated: Date.now()
+             `lastUpdated: Date.now()
 
-   `        `};
+           `};     
 
-        
+           `chrome.storage.local.set({ stats: updatedStats }, () => {
 
-   `        `chrome.storage.local.set({ stats: updatedStats }, () => {
+             `if (chrome.runtime.lastError) {
 
-   `          `if (chrome.runtime.lastError) {
+               `console.error('Storage error:', chrome.runtime.lastError);
 
-   `            `console.error('Storage error:', chrome.runtime.lastError);
+             `}
 
-   `          `}
+           `});
 
-   `        `});
+         `}
 
-   `      `}
+       `});
 
-   `    `});
+     `}
 
-   `  `}
+     `if (request.type === "get\_stats") {
 
-   `  `if (request.type === "get\_stats") {
+       `chrome.storage.local.get(['stats'], (result) => {
 
-   `    `chrome.storage.local.get(['stats'], (result) => {
+         `sendResponse(result.stats || stats);
 
-   `      `sendResponse(result.stats || stats);
+       `});
 
-   `    `});
+       `return true;
 
-   `    `return true;
+     `}
 
-   `  `}
+   `});
 
-   });
+   `chrome.webRequest.onBeforeRequest.addListener(
 
-   chrome.webRequest.onBeforeRequest.addListener(
+     `(details) => {
 
-   `  `(details) => {
+       `if (details.url.match(/ads|adservice|doubleclick|tracking|analytics/i)) {
 
-   `    `if (details.url.match(/ads|adservice|doubleclick|tracking|analytics/i)) {
+         `chrome.storage.local.get(['enabled'], (result) => {
 
-   `      `chrome.storage.local.get(['enabled'], (result) => {
+           `if (result.enabled !== false) {
 
-   `        `if (result.enabled !== false) {
+             `chrome.storage.local.get(['stats'], (res) => {
 
-   `          `chrome.storage.local.get(['stats'], (res) => {
+               `const currentStats = res.stats || stats;
 
-   `            `const currentStats = res.stats || stats;
+               `const updatedStats = {
 
-   `            `const updatedStats = {
+                 `totalBlocked: currentStats.totalBlocked + 1,
 
-   `              `totalBlocked: currentStats.totalBlocked + 1,
+                 `lastBlocked: [{
 
-   `              `lastBlocked: [{
+                   `url: details.url,
 
-   `                `url: details.url,
+                   `type: 'network\_request',
 
-   `                `type: 'network\_request',
+                   `timestamp: Date.now()
 
-   `                `timestamp: Date.now()
+                 `}, ...currentStats.lastBlocked.slice(0, 4)],
 
-   `              `}, ...currentStats.lastBlocked.slice(0, 4)],
+                 `lastUpdated: Date.now()
 
-   `              `lastUpdated: Date.now()
+               `};
 
-   `            `};
+               `chrome.storage.local.set({ stats: updatedStats });
 
-   `            `chrome.storage.local.set({ stats: updatedStats });
+             `});
 
-   `          `});
+             `return { cancel: true };
 
-   `          `return { cancel: true };
+           `}
 
-   `        `}
+         `});
 
-   `      `});
+       `}
 
-   `    `}
+     `},
 
-   `  `},
+     `{ urls: ["<all\_urls>"] },
 
-   `  `{ urls: ["<all\_urls>"] },
+     `["blocking"]
 
-   `  `["blocking"]
-
-   );
+   `);
 
    2) linkedin\.js
 
-   const adSelectors = [
+ `  const adSelectors = [
 
-   `  `'.ad', '.ads', '.ad-container', '.ad-banner', '.ad-wrapper',
+     `'.ad', '.ads', '.ad-container', '.ad-banner', '.ad-wrapper',
 
-   `  `'[class\*="advert"]', '[id\*="advert"]', '[data-ad-type]',
+     `'[class\*="advert"]', '[id\*="advert"]', '[data-ad-type]',
 
-   `  `'iframe[src\*="ads"]', 'iframe[src\*="doubleclick"]', 'iframe[src\*="adservice"]',
+     `'iframe[src\*="ads"]', 'iframe[src\*="doubleclick"]', 'iframe[src\*="adservice"]',
 
-   `  `'.social-widget', '[id\*="social-plugin"]',
+     `'.social-widget', '[id\*="social-plugin"]',
 
-   `  `'.popup', '.modal[data-ad]',
+     `'.popup', '.modal[data-ad]',
 
-   `  `'.video-ads', '.preroll-container'
+     `'.video-ads', '.preroll-container'
 
-   ];
+ `  ];
 
-   function blockAds() {
+  ` function blockAds() {
 
-   `  `let blockedCount = 0;
+     `let blockedCount = 0;
 
-   `  `adSelectors.forEach(selector => {
+     `adSelectors.forEach(selector => {
 
-   `    `document.querySelectorAll(selector).forEach(ad => {
+       `document.querySelectorAll(selector).forEach(ad => {
 
-   `      `if (ad.style.display !== 'none') {
+         `if (ad.style.display !== 'none') {
 
-   `        `ad.style.display = 'none';
+           `ad.style.display = 'none';
 
-   `        `ad.setAttribute('data-adblocked', 'true');
+           `ad.setAttribute('data-adblocked', 'true');
 
-   `        `blockedCount++;
+           `blockedCount++;
 
-   `        `chrome.runtime.sendMessage({
+           `chrome.runtime.sendMessage({
 
-   `          `type: "ad\_blocked",
+             `type: "ad\_blocked",
 
-   `          `url: window.location.href,
+             `url: window.location.href,
 
-   `          `selector: selector,
+             `selector: selector,
 
-   `          `elementType: ad.tagName
+             `elementType: ad.tagName
 
-   `        `});
+           `});
 
-   `      `}
+         `}
 
-   `    `});
+       `});
 
-   `  `});
+     `});
 
-   `  `document.querySelectorAll('script').forEach(script => {
+     `document.querySelectorAll('script').forEach(script => {
 
-   `    `if (script.src && /ads|adservice|doubleclick|tracking|analytics/i.test(script.src)) {
+       `if (script.src && /ads|adservice|doubleclick|tracking|analytics/i.test(script.src)) {
 
-   `      `script.remove();
+         `script.remove();
 
-   `      `blockedCount++;
+         `blockedCount++;
 
-   `    `}
+       `}
 
-   `  `});
+     `});
 
-   `  `return blockedCount;
+     `return blockedCount;
 
-   }
+   `}
 
-   const observer = new MutationObserver(() => {
+   `const observer = new MutationObserver(() => {
 
-   `  `blockAds();
+     `blockAds();
 
-   });
+   `});
 
-   function initAdBlock() {
+   `function initAdBlock() {
 
-   `  `blockAds();
+     `blockAds();
 
-   `  `observer.observe(document, {
+     `observer.observe(document, {
 
-   `    `childList: true,
+       `childList: true,
 
-   `    `subtree: true,
+       `subtree: true,
 
-   `    `attributes: false,
+       `attributes: false,
 
-   `    `characterData: false
+       `characterData: false
 
-   `  `});
+     `});
 
-   }
+   `}
 
-   if (document.readyState === 'loading') {
+   `if (document.readyState === 'loading') {
 
-   `  `document.addEventListener('DOMContentLoaded', initAdBlock);
+     `document.addEventListener('DOMContentLoaded', initAdBlock);
 
-   } else {
+   `} else {
 
-   `  `initAdBlock();
+     `initAdBlock();
 
-   }
+   `}
 
    После этого расширение было снова загружено в браузер. Новый модифицированный блокировщик готов к работе.
