@@ -18,7 +18,7 @@
 
 Создание собственноо блокировщика рекламы для браузера на JavaScript
 <https://github.com/codecrafters-io/build-your-own-x?tab=readme-ov-file#uncategorized>
-<https://levelup.gitconnected.com/building-your-own-adblocker-in-literally-10-minutes-1eec093b04cd>
+<https://nuancesprog.ru/p/9226/>
 
 ## Ответственный по проектной (учебной) практике
 
